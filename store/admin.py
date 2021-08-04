@@ -2,8 +2,8 @@ from django.contrib import admin
 
 # Register your models here.
 from .models import *
-admin.site.register(CustomerTable)
-admin.site.register(ProductTable)
-admin.site.register(OrderTable)
-admin.site.register(OrderItemTable)
-admin.site.register(ShippingAddressTable)
+admin.site.register(Customer)
+admin.site.register(Product)
+admin.site.register(Order)
+admin.site.register(OrderItem)
+admin.site.register(ShippingAddress)

@@ -3,53 +3,78 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-class CustomerTable(models.Model):
+class Customer(models.Model):
     user=models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     #onetoone relationship means that a user can only have one customer and customer can have one user
     #on_delete relationship means that delete the item if the user is deleted
     
-    name = models.CharField(max_length=255, blank=True, null=True)
-    email = models.CharField(max_length=255)
+    name = models.CharField(max_length=200, null=True)
+    email = models.CharField(max_length=200)
     
     
     def __str__(self):
     		return self.name
   
-class ProductTable(models.Model):
-    name = models.CharField(max_length=255, blank=True, null=True)
+class Product(models.Model):
+    name = models.CharField(max_length=255, null=True)
     price=models.FloatField()
     digital = models.BooleanField(default=False,blank=True, null=True)#If the item is digital, we dont need to ship
     #and if digital is false, then it means we need to ship as it is physical item
-    #image
+    product_image=models.ImageField(null=True, blank=True)
        
     def __str__(self):
         return self.name
+    @property# this is property decorator that will enable us to access this as an attribute rather as a method
+    def imageURL(self):
+        try:
+            url=self.product_image.url
+        except:
+            url = ''
+        return url
 	
 
 	
-class OrderTable(models.Model):
-    customer = models.ForeignKey(CustomerTable, on_delete=models.SET_NULL, null=True,blank=True)#if customer is deleted, we dont want to delete the order but rather set the customer value to null
+class Order(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True,blank=True)#if customer is deleted, we dont want to delete the order but rather set the customer value to null
     date_ordered=models.DateTimeField(auto_now_add=True)
-    complete=models.BooleanField(default=False)
+    complete=models.BooleanField(default=False, null=True, blank=False)
     transaction_id=models.CharField(max_length=100, null=True)
     
     def __str__(self):
-        #return str(self.id) #it was giving errors hence commented out
-        return self.customer
+        return str(self.id) #it was giving errors hence commented out
+        #return self.customer
+    @property
+    def get_cart_total(self):
+        orderitems = self.orderitem_set.all()
+        total=sum([item.get_total for item in orderitems])
+        return total
     
-class OrderItemTable(models.Model):
-    product_id = models.ForeignKey(ProductTable, on_delete=models.SET_NULL, null=True)
-    order = models.ForeignKey(OrderTable, on_delete=models.SET_NULL, null=True)
-    quantity = models.IntegerField(null=True,blank=True,default=0)
+    @property
+    def get_cart_items(self):
+        orderitems = self.orderitem_set.all()
+        total=sum([item.quantity for item in orderitems])
+        return total
+        
+    
+class OrderItem(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True)
+    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True,blank=True)
+    quantity = models.IntegerField(default=0,null=True,blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
     
-class ShippingAddressTable(models.Model):
-     customer = models.ForeignKey(CustomerTable, on_delete=models.SET_NULL, null=True)
-     order = models.ForeignKey(OrderTable, on_delete=models.SET_NULL, null=True)
-     address=models.CharField(max_length=200, null=False)
-     city=models.CharField(max_length=200, null=False)
-     state=models.CharField(max_length=200, null=False)
-     zipcode=models.CharField(max_length=200, null=False)
+    #calculate totals for the order items
+    @property
+    def get_total(self):
+        total=self.product.price * self.quantity
+        return total
+    
+class ShippingAddress(models.Model):
+     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True,blank=True)
+     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True,blank=True)
+     address=models.CharField(max_length=200, null=True)
+     city=models.CharField(max_length=200, null=True)
+     state=models.CharField(max_length=200, null=True)
+     zipcode=models.CharField(max_length=200, null=True)
      date_added = models.DateTimeField(auto_now_add=True)
      
      def __str__(self):

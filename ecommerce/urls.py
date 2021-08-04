@@ -16,7 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+#start of libraries for images
+from django.conf.urls.static import static
+from django.conf import settings
+# end of libraries for images
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('store.urls')),#this line does all the routing for the views
 ]
+
+#urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)#error
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
