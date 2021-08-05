@@ -34,6 +34,32 @@ integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLAS
     return cookieValue;
 }
 const csrftoken = getToken('csrftoken');
+
+function getCookie(name){
+  //split cookie string and get all individual name=value pairs in an array
+  var cookieArr=document.cookie.split(';');
+  //loop through the array elements
+  for (var i=0; i < cookieArr.length; i++){
+    var cookiePair=cookieArr[i].split("=");
+    //remove whitespace at the beginning of the cookie name and compare it with the given string
+    if(name==cookiePair[0].trim()){
+      //decode the cookie value and return
+      return decodeURIComponent(cookiePair[1]);
+
+    }
+  }
+  //return null if not found
+  return null;
+}
+var cart=JSON.parse(getCookie('cart'))
+if(cart==undefined){
+  cart={}
+  console.log('Cart was created')
+  document.cookie='cart='+ JSON.stringify(cart) + ";domain=;path=/"
+}
+console.log('cart:',cart)
+
+
 </script>
 </head>
 <body>

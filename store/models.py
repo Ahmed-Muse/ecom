@@ -17,7 +17,7 @@ class Customer(models.Model):
   
 class Product(models.Model):
     name = models.CharField(max_length=255, null=True)
-    price=models.FloatField()
+    price=models.DecimalField(max_digits=7,decimal_places=2)
     digital = models.BooleanField(default=False,blank=True, null=True)#If the item is digital, we dont need to ship
     #and if digital is false, then it means we need to ship as it is physical item
     product_image=models.ImageField(null=True, blank=True)

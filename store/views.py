@@ -17,7 +17,7 @@ def store(request):
     else:
         items=[]
         order={'get_cart_total':0, 'get_cart_items':0,'shipping':False}
-        cartItems=['get_cart_items']
+        cartItems= order['get_cart_items']
     products = Product.objects.all()#assign all the objects in the table to the variable
 
     context = {
@@ -40,9 +40,36 @@ def cart(request):
         items=order.orderitem_set.all()
         cartItems=order.get_cart_items
     else:
+        try:
+            cart=json.loads(request.COOKIES['cart'])#this will turn back to python dictionary
+        except:
+            cart={}
+        print('Cart:',cart)
         items=[]
         order={'get_cart_total':0, 'get_cart_items':0,'shipping':False}#this is to avoid error for unauthenticated user, when you log out
-        cartItems=['get_cart_items']
+        cartItems= order['get_cart_items']
+        for i in cart:
+            try:
+                cartItems+=cart[i]['quantity']
+                product=Product.objects.get(id=i)
+                total=(product.price * cart[i]['quantity'])
+                order['get_cart_total']+=total
+                order['get_cart_items']+=cart[i]['quantity']
+                item={
+                    'product':{
+                    'id':product.id,
+                    'name':product.name,
+                    'price':product.price,
+                    'imageURL':product.imageURL,
+                    },
+                    'quantity':cart[i]['quantity'],
+                    'get_total':total
+                }
+                items.append(item)
+                if product.digital==False:
+                    order['shipping']=True
+            except:
+                pass
     context={
         "items":items,
         "order":order,
