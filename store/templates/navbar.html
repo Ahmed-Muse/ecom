@@ -1,0 +1,42 @@
+{% load static %}
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#myPage">Allifmaal Ltd</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#about">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#portfolio">Porfolio</a></li>
+        
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#contact">Contacts</a></li>
+       
+
+       
+       
+        
+        <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a></li>
+        
+        
+        
+        
+    
+
+<!--start of modal content for the version-->
+        
+<!--end of modal content-->
+        
+
+      </ul>
+    </div>
+  </div>
+</nav>

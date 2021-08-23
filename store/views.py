@@ -104,3 +104,28 @@ def processOrder(request):
             )
     
     return JsonResponse('Payment complete...', safe=False)
+def main(request):
+    return render(request, 'store/main.html')
+
+def website(request):
+    
+    context = {
+        
+    }
+
+    return render(request,'website.html',context)
+def dashboard(request):
+    
+    context = {
+        
+    }
+
+    return render(request,'dashboard.html',context)
+
+def base_dashboard(request):
+    
+    context = {
+        
+    }
+
+    return render(request,'base_dashboard.html',context)

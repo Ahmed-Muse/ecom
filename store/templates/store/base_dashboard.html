@@ -1,0 +1,223 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes,maximum-scale=1, minimum-scale=1">
+    
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <!--FontAwesome CDN-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+        integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+
+    <!--Chartjs CDN-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
+    <title>{{title}}</title>
+
+    <script type="text/javascript">
+        var user ='{{request.user}}'
+      
+        //creating csrf token inside js
+        function getToken(name) {
+          let cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+              const cookies = document.cookie.split(';');
+              for (let i = 0; i < cookies.length; i++) {
+                  const cookie = cookies[i].trim();
+                  // Does this cookie string begin with the name we want?
+                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+      const csrftoken = getToken('csrftoken');
+      
+      function getCookie(name){
+        //split cookie string and get all individual name=value pairs in an array
+        var cookieArr=document.cookie.split(';');
+        //loop through the array elements
+        for (var i=0; i < cookieArr.length; i++){
+          var cookiePair=cookieArr[i].split("=");
+          //remove whitespace at the beginning of the cookie name and compare it with the given string
+          if(name==cookiePair[0].trim()){
+            //decode the cookie value and return
+            return decodeURIComponent(cookiePair[1]);
+      
+          }
+        }
+        //return null if not found
+        return null;
+      }
+      var cart=JSON.parse(getCookie('cart'))
+      if(cart==undefined){
+        cart={}
+        console.log('Cart was created')
+        document.cookie='cart='+ JSON.stringify(cart) + ";domain=;path=/"
+      }
+      console.log('cart:',cart)
+      
+      
+      </script>
+ 
+</head>
+<link rel="stylesheet" type="text/css" href="{% static 'css/eshop_mainstyle.css' %}">
+<body>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/eshop_mainstyle.css' %}">
+
+    <!--this css file is for the calculator-->
+    <link href="{% static 'css/stylescalc2.css' %}" rel="stylesheet">
+
+
+
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-info bg-info">
+        <div class="container">
+            <a class="navbar-brand text-white" href="/">Website</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="{% url 'dashboard' %}">Dashboard<span
+                                class="sr-only">(current)</span></a>
+                        
+                  
+                    
+                </ul>
+                
+                 <!-- Trigger the modal with a button -->
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="#myModal" data-toggle="modal" data-target="#myModal">Calculator <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+
+                
+
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="#">Admin Profile <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+                    
+
+                    <!--start for the cart section navbar-->
+                    <div class="form-inline my-2 my-lg-0">
+                        <a href="{% url 'cart' %}">
+                           <img  id="cart-icon" src="{% static 'images/cart.png' %}"></a>
+                       <p id="cart-total">{{cartItems}}0</p>
+                       <!--end for the cart section navbar-->
+           
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    <!--End Navbar-->
+    {% block content %}
+    {% endblock %}
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    -->
+
+
+<!--start of calculator modal part-->
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Calculator</h4>
+            
+          </div>
+          <div class="modal-body">
+  
+  
+            <!--start of the modal content which is the calculator section-->
+            <table class="calculator">
+                <tr>
+                    <td colspan="3"><input class="display-box" type="text" id="result" disabled /></td>
+                    <!-- clearScreen() function clear all the values  -->
+                    <td><input class="button" type="button" value="C" onclick="clearScreen()" style="background-color: #fb0066;" /> </td>
+                </tr>
+                <tr>
+                    <!-- display() function display the value of clicked button -->
+                    <td><input class="button" type="button" value="1" onclick="display('1')" /> </td>
+                    <td><input class="button" type="button" value="2" onclick="display('2')" /> </td>
+                    <td><input class="button" type="button" value="3" onclick="display('3')" /> </td>
+                    <td><input class="button" type="button" value="/" onclick="display('/')" /> </td>
+                </tr>
+                <tr>
+                    <td><input class="button" type="button" value="4" onclick="display('4')" /> </td>
+                    <td><input class="button" type="button" value="5" onclick="display('5')" /> </td>
+                    <td><input class="button" type="button" value="6" onclick="display('6')" /> </td>
+                    <td><input class="button" type="button" value="-" onclick="display('-')" /> </td>
+                </tr>
+                <tr>
+                    <td><input class="button" type="button" value="7" onclick="display('7')" /> </td>
+                    <td><input class="button" type="button" value="8" onclick="display('8')" /> </td>
+                    <td><input class="button" type="button" value="9" onclick="display('9')" /> </td>
+                    <td><input class="button" type="button" value="+" onclick="display('+')" /> </td>
+                </tr>
+                <tr>
+                    <td><input class="button" type="button" value="." onclick="display('.')" /> </td>
+                    <td><input class="button" type="button" value="0" onclick="display('0')" /> </td>
+                    <!-- calculate() function evaluate the mathematical expression -->
+                    <td><input class="button" type="button" value="=" onclick="calculate()" style="background-color: #fb0066;" /> </td>
+                    <td><input class="button" type="button" value="*" onclick="display('*')" /> </td>
+                </tr>
+            </table>
+            <!--end of the modal content which is the calculator section-->
+  
+           
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--end of calculator modal part-->
+  
+
+  
+<!-- JavaScript Bundle with Popper for the bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+</body>
+<script src="{% static 'js/scriptcalc2.js' %}"></script>
+</html>
