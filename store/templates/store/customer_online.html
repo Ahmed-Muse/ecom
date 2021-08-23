@@ -1,0 +1,87 @@
+{% extends "store/main.html"%}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+    
+<div class="row">
+	<div class="col-lg-4">
+		<div class="box-element" id="form-wrapper">
+           <!-- <form id="form"> if you have this form uncommented, the form below will not work-->
+                <div id="user-info">
+                <h6 style="padding-left:165px">Add New Product</h6>
+                <form method='POST' action=''> {% csrf_token %}
+
+                    {{form|crispy}}
+
+                </div>
+                
+                <hr>
+                
+                
+                <input id="form-button" class="btn btn-success btn-block" type="submit" value="Add">
+            </form>
+
+		</div>
+
+        <br>
+
+		
+	</div>
+    
+
+	<div class="col-lg-8">
+		<div class="box-element">
+            <div class="box-element">
+              
+        <h3>Online Products</h3>
+        <hr>
+       
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    {{header}}
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                       <!--main content-->
+                       <table class="table table-hover">
+                        <thead>
+                            
+                          <tr>
+                           
+                            <th scope="col">User</th>
+                            <th scope="col">Customer Name</th>
+                            
+                            <th scope="col">Customer Email</th>
+                            
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% for customer in customers %}
+                            <tr>
+                         
+                            <td>{{customer.user}}</td>
+                            <td>{{customer.name}}</td>
+                           
+                            <td>{{customer.email}}</td>
+                           
+                          </tr>
+                         
+                        
+                        </tbody>
+                        {% endfor %}
+                      </table>
+                        
+               
+                </div>
+            </div>
+        </div>
+    
+            </div>
+
+		</div>
+	</div>
+</div>
+
+{% endblock %}

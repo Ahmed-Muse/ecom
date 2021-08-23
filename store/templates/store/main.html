@@ -66,21 +66,24 @@ console.log('cart:',cart)
     <!--start of navbar section-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="{% url 'dashboard' %}" style="padding-left: 120px;">Dashboard</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="{% url 'store' %}" style="padding-left: 30px;">Online Shop</a>
+        <a class="navbar-brand" href="{% url 'stock_online' %}" style="padding-left: 30px;">Stock</a>
+        <a class="navbar-brand" href="{% url 'customer_online' %}" style="padding-left: 30px;">Customers</a>
+        <a class="navbar-brand" href="{% url 'orders_online' %}" style="padding-left: 30px;">Orders</a>
+        <a class="navbar-brand" href="{% url 'order_online_items' %}" style="padding-left: 30px;">Order Items</a>
+        <a class="navbar-brand" href="{% url 'shipping_address_online' %}" style="padding-left: 30px;">Shipping Address</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" 
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
       
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'store' %}">Online Shop <span class="sr-only"></span></a>
-            </li></ul></div>
+        
             
-            <div class="form-inline my-2 my-lg-0">
-                <a href="#"class="btn btn-warning">Login</a>
+            <div class="form-inline my-2 my-lg-0" style="padding-left: 220px;">
+                <a href="#"class="btn btn-warning" >Login</a>
               </div>
                 <a href="{% url 'cart' %}">
-                   <img  id="cart-icon" src="{% static 'images/cart.png' %}">
+                   <img  id="cart-icon"  src="{% static 'images/cart.png' %}">
                </a>
                <p id="cart-total">{{cartItems}}</p>
    

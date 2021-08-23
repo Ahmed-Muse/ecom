@@ -1,0 +1,104 @@
+{% extends "ems/base_dashboard.html"%}
+{% load static %}
+
+{% block content %}
+
+    <!--Topside-->
+    <div class="container">
+      <div class="row mt-4">
+          <div class="col-md-4">
+              <div class="card">
+                  <div class="card-header bg-info text-white">
+                      Information
+                  </div>
+                  <div class="card-body">
+                      <marquee behavior="" direction="left">
+                          <h3 class="my-4"> {{title}}</h3> </h3>
+                      </marquee>
+                  </div>
+              </div>
+              <!--start content of left column-->
+              <form id="form">
+                
+                <div id="shipping-info">
+                    <hr>
+						<div class="form-field">
+							<input class="form-control" type="text" name="part_number" placeholder="Product part number">
+						</div>
+						<div class="form-field">
+							<input class="form-control" type="text" name="description" placeholder="Product description">
+						</div>
+						<div class="form-field">
+							<input class="form-control" type="number" name="quantity" placeholder="Quantity">
+						</div>
+						<div class="form-field">
+							<input class="form-control" type="number" name="price" placeholder="Price">
+						</div>
+						<div class="form-field">
+							<input class="form-control" type="text" name="comment" placeholder="Comments">
+						</div>
+                    
+                </div>
+                <hr>
+                
+                <input id="form-button" class="btn btn-success btn-block" type="submit" value="Add">
+            </form>
+
+              <!--end of content of left column-->
+
+
+          </div>
+          <div class="col-md-8">
+              <div class="card">
+                  <div class="card-header bg-info text-white">
+                      {{header}}header
+                  </div>
+                  <div class="card-body">
+                      <div class="row">
+                         <!--main content-->
+                         <table class="table table-hover">
+                          <thead>
+                            <tr>
+                              <th scope="col">No.</th>
+                              <th scope="col">Name</th>
+                              <th scope="col">Project</th>
+                              <th scope="col">Status</th>
+                              <th scope="col">Contacts</th>
+                              <th scope="col">Address</th>
+                              <th scope="col">Comments</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row">1</th>
+                              <td>Mark-Eunice Holdings</td>
+                              <td>ERP</td>
+                              <td>On going</td>
+                              <td>Mr. Mark</td>
+                              <td>Westlands</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">2</th>
+                              <td>Lands Holdings</td>
+                              <td>ERP</td>
+                              <td>On going</td>
+                              <td>Mr. Omar</td>
+                              <td>KM4</td>
+                            </tr>
+                            {% for product in products %}
+                            {{product.description}}
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                          
+                          
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!--End Topside-->
+
+
+{% endblock %}

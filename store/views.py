@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import * #you can do dot because models and views are in the same directory as dot means from this directory
 from django.http import JsonResponse
 import json
 import datetime
 from .utils import *
+from .forms import *
+from django.contrib import messages
 # Create your views here.
 
 def store(request):
@@ -129,3 +131,110 @@ def base_dashboard(request):
     }
 
     return render(request,'base_dashboard.html',context)
+def hrm(request):
+    
+    context = {
+        
+    }
+
+    return render(request,'ems/hrm/hrm.html',context)
+def stock(request):
+    
+    context = {
+        
+    }
+
+    return render(request,'ems/stock/stock.html',context)
+def customers(request):
+    
+    context = {
+        
+    }
+
+    return render(request,'ems/customers/customers.html',context)
+
+#online parts
+def stock_online(request):
+    title="Allifmaal Online Stock"
+    form=AddOnlineStockForm(request.POST or None)
+    items = Product.objects.all()
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Customer added successfully')
+        return redirect('stock_online')
+   
+    context={
+        "title": title,
+        "form":form,
+        "items":items,
+        
+        }
+    return render(request,'store/stock_online.html',context)
+
+def customer_online(request):
+    title="Allifmaal Online Stock"
+    form=AddOnlineCustomerForm(request.POST or None)
+    customers = Customer.objects.all()
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Customer added successfully')
+        return redirect('customer_online')
+   
+    context={
+        "title": title,
+        "form":form,
+        "customers":customers,
+        
+        }
+    return render(request,'store/customer_online.html',context)
+def orders_online(request):
+    title="Allifmaal Online Stock"
+    form=AddOnlineOrdersForm(request.POST or None)
+    orders = Order.objects.all()
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Customer added successfully')
+        return redirect('orders_online')
+   
+    context={
+        "title": title,
+        "form":form,
+        "orders":orders,
+        
+        }
+    return render(request,'store/orders_online.html',context)
+
+def order_online_items(request):
+    title="Allifmaal Online Stock"
+    form=OrderOnlineItemsForm(request.POST or None)
+    orderitems = OrderItem.objects.all()
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Customer added successfully')
+        return redirect('order_online_items')
+   
+    context={
+        "title": title,
+        "form":form,
+        "orderitems":orderitems,
+        
+        }
+    return render(request,'store/order_online_items.html',context)
+
+def shipping_address_online(request):
+    title="Allifmaal Online Stock"
+    form=AddShippingAdressOnlineForm(request.POST or None)
+    shipping_details = ShippingAddress.objects.all()
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Customer added successfully')
+        return redirect('shipping_address_online')
+   
+    context={
+        "title": title,
+        "form":form,
+        "shipping_details":shipping_details,
+        
+        }
+    return render(request,'store/shipping_address_online.html',context)
+

@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #'store',
     'store.apps.StoreConfig',
+    'crispy_forms',
     
 ]
 
