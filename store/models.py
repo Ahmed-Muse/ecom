@@ -53,12 +53,12 @@ class Order(models.Model):
         return shipping
     
     @property
-    def get_cart_total(self):
+    def get_cart_total(self):# sin
         orderitems = self.orderitem_set.all()
         total=sum([item.get_total for item in orderitems])
         return total
     
-    @property
+    @property # since now this is a property, we can access it in the template
     def get_cart_items(self):
         orderitems = self.orderitem_set.all()
         total=sum([item.quantity for item in orderitems])
@@ -71,7 +71,7 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(default=0,null=True,blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
     
-    #calculate totals for the order items
+    #calculate totals for the order items by creating the method below
     @property
     def get_total(self):
         total=self.product.price * self.quantity
@@ -88,6 +88,53 @@ class ShippingAddress(models.Model):
      
      def __str__(self):
            return self.address
+
+
+###############################################################################################################################
+#below is for the EMS 
+class PhysicalStockTable(models.Model):
+    part_number = models.CharField(max_length=255, blank=True, null=True)# unique prevents data duplication
+    description = models.CharField(max_length=255, blank=True, null=True)
+    quantity = models.IntegerField(default="0",blank=False,null=True)
+    price = models.IntegerField(default="0",blank=True, null=True)
+    comments = models.CharField(max_length=255, blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)#if adding now, pick currrent data and if updating stick to the original date
+    last_updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    received_quantity = models.IntegerField(default='0',blank=True,null=True)
+    received_by = models.CharField(max_length=50,blank=True,null=True)
+    issued_quantity = models.IntegerField(default='0',blank=True,null=True)
+    issued_by = models.CharField(max_length=50,blank=True,null=True)
+    issued_to = models.CharField(max_length=50,blank=True,null=True)
+    created_by = models.CharField(max_length=50,blank=True,null=True)
+    reorder_level = models.IntegerField(default='0',blank=True,null=True)
     
+    
+    def __str__(self):
+    		return self.part_number + ' ' + self.description # this will show up in the admin area
+  
+
+################################################################################################################################
+
+
+##################### below is for just testing
+class ForTestingOnly(models.Model):
+    product_name=models.CharField(max_length=200, null=True)
+    product_quantity= models.IntegerField(default=0,null=True,blank=True)
+    product_price = models.IntegerField(default=0,null=True,blank=True)
+    def __str__(self):
+           return self.product_name
+    @property
+    def get_quantity_times_price(self):
+        quantity_multiplied_price=self.product_quantity * self.product_price
+        return quantity_multiplied_price
+class ForTey(models.Model):
+    product_name=models.CharField(max_length=200, null=True)
+    product_quantity= models.IntegerField(default=0,null=True,blank=True)
+    product_price = models.IntegerField(default=0,null=True,blank=True)
+    def __str__(self):
+           return self.product_name
+   
+   
+   
 
     

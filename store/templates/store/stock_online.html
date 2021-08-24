@@ -1,4 +1,6 @@
+
 {% extends "store/main.html"%}
+
 {% load crispy_forms_tags %}
 {% load static %}
 
@@ -61,10 +63,10 @@
                             {% for item in items %}
                             <tr>
                          
-                            <td>{{item.product_name}}</td>
-                            <td>{{item.product_quantity}}</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.quantity}}</td>
                            
-                            <td>${{item.product_price}}</td>
+                            <td>${{item.price}}</td>
                            
                           </tr>
                          

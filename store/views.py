@@ -139,12 +139,49 @@ def hrm(request):
 
     return render(request,'ems/hrm/hrm.html',context)
 def stock(request):
+    title="Physical Stock "
+    form =AddPhysicalProductForm(request.POST or None)
+    physical_products=PhysicalStockTable.objects.all()
     
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Stock added successfully')
+        form=AddPhysicalProductForm()#this clears out the form after adding the product
+    else:
+       form.non_field_errors
+
     context = {
+        "title":title,
+        "form":form,
+        "physical_products":physical_products
         
     }
 
     return render(request,'ems/stock/stock.html',context)
+def delete_physical_stock(request,pk):
+    delete_table_content=PhysicalStockTable.objects.get(id=pk)
+    if request.method =="POST":
+        delete_table_content.delete()
+        messages.success(request,'Item deleted successfully')
+        return redirect('stock')
+    return render(request,'ems/stock/delete_physical_stock.html')
+
+def update_physical_stock(request, pk):
+    update_table_content= PhysicalStockTable.objects.get(id=pk)
+    form = AddPhysicalProductForm(instance= update_table_content)#insert the content of the table stored in the selected id in the update form
+    #we could have used the add customer form but the validation will refuse us to update since fields may exist
+    if request.method == 'POST':
+        form = AddPhysicalProductForm(request.POST, instance= update_table_content)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Stock updated successfully')
+            return redirect('/stock')#just redirection page
+    context = {
+		'form':form,
+    }
+    return render(request, 'ems/stock/stock.html', context)#this is the main page rendered first
+
+
 def customers(request):
     
     context = {
@@ -153,7 +190,64 @@ def customers(request):
 
     return render(request,'ems/customers/customers.html',context)
 
-#online parts
+def issue_or_receive_physical_items(request, pk):
+    query_table_content =PhysicalStockTable.objects.get(id=pk)
+    context = {
+
+		"query_table_content": query_table_content,
+
+	}
+    return render(request, "ems/stock/issue_or_receive_physical_items.html", context)
+
+def issue_physical_items(request, pk):
+    query_table_content =PhysicalStockTable.objects.get(id=pk)
+    form = IssuePhysicalItemsForm(request.POST or None, instance=query_table_content)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.received_quantity=0
+        instance.quantity -= instance.issued_quantity
+        #instance.line_total=instance.price*instance.quantity_in_store
+        #instance.quantity=instance.quantity - instance.issue_quantity
+
+        #instance.issue_by = str(request.user)
+     
+        instance.issued_by=str(request.user)
+        instance.save()
+
+        #return redirect('/stock'+str(instance.id))
+        return redirect('/stock')
+    context = {
+		"title": 'Issue ' + str(query_table_content.part_number),
+		"query_table_content": query_table_content,
+		"form": form,
+		#"username": 'Issue By: ' + str(request.user),
+	}
+    return render(request, "ems/stock/stock.html", context)
+def receive_physical_items(request, pk):
+    query_table_content = PhysicalStockTable.objects.get(id=pk)
+    form = ReceivePhysicalItemsForm(request.POST or None, instance=query_table_content)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.issued_quantity=0
+        instance.quantity +=instance.received_quantity
+        instance.receive_by=str(request.user)
+        instance.save()
+    
+       # return redirect('/stock_details/'+str(instance.id))
+        return redirect('/stock/')
+    context = {
+			"title": 'Receive ' + str(query_table_content.part_number),
+			"query_table_content": query_table_content,
+			"form": form,
+			#"username": 'Receive By: ' + str(request.user),
+		}
+    return render(request, "ems/stock/stock.html", context)
+
+
+
+
+
+################# start .............online parts#########################################
 def stock_online(request):
     title="Allifmaal Online Stock"
     form=AddOnlineStockForm(request.POST or None)
@@ -238,3 +332,23 @@ def shipping_address_online(request):
         }
     return render(request,'store/shipping_address_online.html',context)
 
+################### end ............. online part####################################################
+
+
+####################### below is for testing only
+def test(request):
+    title="Testing Page"
+    form=AddProductForTestingOnlyForm(request.POST or None)
+    products = ForTestingOnly.objects.all()
+    
+   
+    context={
+        "title": title,
+        "form":form,
+        "products":products,
+        
+
+       
+        
+        }
+    return render(request,'test.html',context)

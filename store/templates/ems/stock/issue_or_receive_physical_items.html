@@ -10,7 +10,25 @@
           <div class="col-md-4">
               <div class="card">
                   <div class="card-header bg-info text-white">
-                      Information
+
+
+                    <a href="{% url 'issue_physical_items' query_table_content.id %}">
+                        <div class="btn btn-danger"> Issue</div>
+                        </a>
+                        
+                        <a href="{% url 'receive_physical_items' query_table_content.id %}">
+                          <div class="btn btn-primary"> Receive</div>
+
+                          <a href="{% url 'stock' %}">
+                            <div class="btn btn-primary"> Stock</div>
+                          
+                          
+                        </a><br><br>
+
+
+
+
+                      
                   </div>
                   <div class="card-body">
                       <marquee behavior="" direction="left">
@@ -18,20 +36,13 @@
                       </marquee>
                   </div>
               </div>
-              <!--start content of left column-->
-              <form method='POST' action=''>{% csrf_token %}
-                {{form|crispy}}<br><!-- this form is imported from the views under add_customers function and it was initially creaate
-                    in the forms.py file-->
-                    <input type="submit" value='Save'/>
-                </form>
-              <!--end of content of left column-->
-
+              
 
           </div>
           <div class="col-md-8">
               <div class="card">
                   <div class="card-header bg-info text-white">
-                      {{header}}
+                      {{header}}head
                   </div>
                   <div class="card-body">
                       <div class="row">
@@ -44,24 +55,23 @@
                               <th scope="col">Description</th>
                               <th scope="col">Quantity</th>
                               <th scope="col">Price</th>
-                              <th scope="col">Action</th>
+                              
                             </tr>
                           </thead>
-                          {% for product in physical_products %}
+                          
                           <tbody>
                             <tr>
-                              <th scope="row">{{product.id}}</th>
-                              <td>{{product.part_number}}</td>
-                              <td>{{product.description}}</td>
-                              
-                              <td><a href="{% url 'issue_or_receive_physical_items' product.id %}"> {{product.quantity}}</a></td>
-                              <td>${{product.price}}</td> 
-                              <td> <a href="{% url 'update_physical_stock' product.id %}" data-toggle="tooltip" title="Update this record">Update</a></td>
-                              <td> <a href="{% url 'delete_physical_stock' product.id %}" data-toggle="tooltip" title="Delete this record"><img src="{% static 'images/delete.png'%}" width="30"></a></td>
-                            </tr>
-                            
+                                <td>{{query_table_content.id}}</td>
+                                <td>{{query_table_content.part_number}}</td>
+                                <td>{{query_table_content.description}}</td>
+                                
+                                <td>{{query_table_content.quantity}}</td>
+                                <td>{{query_table_content.price}}</td>
+                                
+                               
+                              </tr>
                            
-                            {% endfor %}
+                           
                           </tbody>
                         </table>
                           
@@ -75,4 +85,7 @@
   <!--End Topside-->
 
 
-{% endblock %}
+
+
+
+        {% endblock %}

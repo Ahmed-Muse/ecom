@@ -7,14 +7,12 @@ class AddOnlineStockForm(forms.ModelForm): #the forms here is the one imported u
         model = Product
         fields = ['name','price','digital','product_image']
         
-        """ widgets={
-            'part_number':forms.TextInput(attrs={'class':'form-control','placeholder':'part number','background-color':'red'}),
-            'description':forms.TextInput(attrs={'class':'form-control','placeholder':'item description'}),
-            'quantity_in_store':forms.NumberInput(attrs={'class':'form-control','placeholder':'Quantity'}),
-            'price':forms.TextInput(attrs={'class':'form-control','placeholder':'price'}),
-            'comments':forms.TextInput(attrs={'class':'form-control','placeholder':'comments'}),
+        widgets={
+            'name':forms.TextInput(attrs={'class':'form-control','placeholder':'Product Name'}),
+            'price':forms.TextInput(attrs={'class':'form-control','placeholder':'Product Price'}),
+            
             #form-control here is the css class that we are passing
-        } """
+        } 
 class AddOnlineCustomerForm(forms.ModelForm): #the forms here is the one imported up there.
     class Meta:
         model = Customer
@@ -32,6 +30,35 @@ class AddShippingAdressOnlineForm(forms.ModelForm): #the forms here is the one i
     class Meta:
         model = ShippingAddress
         fields = ["customer",'order']
+
+
+
+
+
+##########################################################################################################################
+#below is for EMS
+class AddPhysicalProductForm(forms.ModelForm): #the forms here is the one imported up there.
+    class Meta:
+        model = PhysicalStockTable
+        fields = ["part_number",'description','quantity','price','comments']
+class IssuePhysicalItemsForm(forms.ModelForm):
+    	class Meta:
+            model = PhysicalStockTable
+            fields = ['issued_quantity', 'issued_to']
+class ReceivePhysicalItemsForm(forms.ModelForm):
+    	class Meta:
+            model = PhysicalStockTable
+            fields = ['received_quantity']
+
+
+############################################################################################################################
+
+
+##################3 below is for testing only############
+class AddProductForTestingOnlyForm(forms.ModelForm): #the forms here is the one imported up there.
+    class Meta:
+        model = ForTestingOnly
+        fields = ["product_name",'product_quantity','product_price']
 
 
 
