@@ -140,6 +140,7 @@ def hrm(request):
     return render(request,'ems/hrm/hrm.html',context)
 def stock(request):
     title="Physical Stock "
+    header="Inventory Management System"
     form =AddPhysicalProductForm(request.POST or None)
     physical_products=PhysicalStockTable.objects.all()
     
@@ -153,7 +154,8 @@ def stock(request):
     context = {
         "title":title,
         "form":form,
-        "physical_products":physical_products
+        "physical_products":physical_products,
+        "header":header,
         
     }
 
@@ -161,10 +163,14 @@ def stock(request):
 def delete_physical_stock(request,pk):
     delete_table_content=PhysicalStockTable.objects.get(id=pk)
     if request.method =="POST":
+        
         delete_table_content.delete()
         messages.success(request,'Item deleted successfully')
         return redirect('stock')
-    return render(request,'ems/stock/delete_physical_stock.html')
+    context={
+        "delete_table_content":delete_table_content,
+    }
+    return render(request,'ems/stock/delete_physical_stock.html',context)
 
 def update_physical_stock(request, pk):
     update_table_content= PhysicalStockTable.objects.get(id=pk)
@@ -191,8 +197,11 @@ def customers(request):
     return render(request,'ems/customers/customers.html',context)
 
 def issue_or_receive_physical_items(request, pk):
+    header="Receive or issue items "
     query_table_content =PhysicalStockTable.objects.get(id=pk)
+
     context = {
+        "header":header,
 
 		"query_table_content": query_table_content,
 
@@ -243,7 +252,29 @@ def receive_physical_items(request, pk):
 		}
     return render(request, "ems/stock/stock.html", context)
 
+def reorder_level(request,pk):
+    query_table_content =PhysicalStockTable.objects.get(id=pk)
+    form=PhysicalItemsReorderLevelForm(request.POST or None,instance=query_table_content)
+    if form.is_valid():
+        instance=form.save(commit=False)
+        instance.save()
+      
+        return redirect('/stock')
+    context={
+        "instance":query_table_content,
+        "form":form,
+    }
+    return render(request,"ems/stock/stock.html",context)
 
+def product_full_details(request,pk):
+    query_table_content =PhysicalStockTable.objects.get(id=pk)
+    
+   
+    context={
+        "query_table_content":query_table_content,
+        
+    }
+    return render(request,"ems/stock/product_full_details.html",context)
 
 
 

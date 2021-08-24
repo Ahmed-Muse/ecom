@@ -49,6 +49,11 @@ class ReceivePhysicalItemsForm(forms.ModelForm):
     	class Meta:
             model = PhysicalStockTable
             fields = ['received_quantity']
+class PhysicalItemsReorderLevelForm(forms.ModelForm):
+    	class Meta:
+            model = PhysicalStockTable
+            fields = ['reorder_level']
+
 
 
 ############################################################################################################################

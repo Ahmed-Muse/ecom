@@ -1,0 +1,206 @@
+{% extends "ems/base_dashboard.html"%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <!--Topside-->
+    <div class="container">
+      <div class="row mt-4">
+          <div class="col-md-6">
+              <div class="card">
+                  <div class="card-header bg-info text-white">
+
+                header
+                  </div>
+                  <div class="card-body">
+                      
+                    <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">PN</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Price</th>
+                           
+                            
+                          </tr>
+                        </thead>
+                        
+                        <tbody>
+                          <tr>
+                              <td>{{query_table_content.id}}</td>
+                              <td>{{query_table_content.part_number}}</td>
+                              <td>{{query_table_content.description}}</td>
+                              <td>{{query_table_content.quantity}}</td>
+                              <td>{{query_table_content.price}}</td>
+                             
+                            </tr>
+                         
+                         
+                        </tbody>
+                      </table>
+                        
+                  </div>
+              </div>
+              <br><br>
+
+              
+
+
+
+
+              <div class="card">
+                <div class="card-header bg-info text-white">
+
+              header
+                </div>
+                <div class="card-body">
+                    
+                  <table class="table table-hover">
+                      <thead>
+                        <tr>
+                            <th scope="col">Reorder</th>
+                          <th scope="col">Received quantity</th>
+                          <th scope="col">Received By</th>
+                          
+                         
+                        
+                        </tr>
+                      </thead>
+                      
+                      <tbody>
+                        <tr>
+                            <td>{{query_table_content.reorder_level}}</td>
+                            
+                            <td>{{query_table_content.received_quantity}}</td>
+                            <td>{{query_table_content.received_by}}</td>
+                            
+                           
+                          </tr>
+                       
+                       
+                      </tbody>
+                    </table>
+                      
+                </div>
+            </div>
+           
+
+
+
+
+
+
+
+
+
+
+          </div>
+         
+          
+          <div class="col-md-6">
+              <div class="card">
+                  <div class="card-header bg-info text-white">
+                      {{header}} header
+                  </div>
+                  <div class="card-body">
+                      <div class="row">
+                         <!--main content-->
+                         <table class="table table-hover">
+                          <thead>
+                            <tr>
+                              
+                              
+                             
+                              <th scope="col">Timestamp</th>
+                              <th scope="col">Last Updated</th>
+
+
+                            </tr>
+                          </thead>
+                          
+                          <tbody>
+                            <tr>
+                               
+                                
+                                <td>{{query_table_content.timestamp}}</td>
+                                <td>{{query_table_content.last_updated}}</td>
+                              </tr>
+                           
+                           
+                          </tbody>
+                        </table>
+                          
+                          
+                      </div>
+                  </div>
+              </div>
+              <br><br>
+              
+
+
+
+
+
+
+
+
+
+              <div class="card">
+                <div class="card-header bg-info text-white">
+
+              header
+                </div>
+                <div class="card-body">
+                    
+                  <table class="table table-hover">
+                      <thead>
+                        <tr>
+                       
+                          <th scope="col">Issued Quantity</th>
+                          <th scope="col">Issued By</th>
+                          <th scope="col">Issued To </th>
+                          <th scope="col">Created By </th>
+                        
+                        </tr>
+                      </thead>
+                      
+                      <tbody>
+                        <tr>
+                            
+                            <td>{{query_table_content.issued_quantity}}</td>
+                            <td>{{query_table_content.issued_by}}</td>
+                            <td>{{query_table_content.issued_to}}</td>
+                          
+                            <td>{{query_table_content.created_by}}</td>
+                            
+                          </tr>
+                       
+                       
+                      </tbody>
+                    </table>
+                      
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+          </div>
+          
+      </div>
+  </div>
+  <!--End Topside-->
+
+
+
+
+
+        {% endblock %}

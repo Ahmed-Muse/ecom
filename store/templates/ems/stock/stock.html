@@ -39,25 +39,43 @@
                          <table class="table table-hover">
                           <thead>
                             <tr>
-                              <th scope="col">ID</th>
-                              <th scope="col">PN</th>
+                             
                               <th scope="col">Description</th>
                               <th scope="col">Quantity</th>
                               <th scope="col">Price</th>
+                              <th scope="col">Reorder Level</th>
+                              <th scope="col">More</th>
                               <th scope="col">Action</th>
                             </tr>
                           </thead>
                           {% for product in physical_products %}
                           <tbody>
                             <tr>
-                              <th scope="row">{{product.id}}</th>
-                              <td>{{product.part_number}}</td>
+                             
                               <td>{{product.description}}</td>
+                              <td>
+
+                              {% if product.quantity <= product.reorder_level %}
+                   
+                    <div style="background-color: orange"> <a href="{% url 'issue_or_receive_physical_items' product.id %}"> {{product.quantity}}</a></div>
+                   
+                    {% else %}
+                    <a href="{% url 'issue_or_receive_physical_items' product.id %}"> {{product.quantity}}</a>
+                    
+                    {% endif %}
+                              </td>  
+
+
+
+
                               
-                              <td><a href="{% url 'issue_or_receive_physical_items' product.id %}"> {{product.quantity}}</a></td>
+                             
                               <td>${{product.price}}</td> 
-                              <td> <a href="{% url 'update_physical_stock' product.id %}" data-toggle="tooltip" title="Update this record">Update</a></td>
+                              <td><a href="{% url 'reorder_level' product.id %}">{{product.reorder_level}}</a></td> 
+                              <td><a href="{% url 'product_full_details' product.id %}">More</a></td>
+                              <td> <a href="{% url 'update_physical_stock' product.id %}" data-toggle="tooltip" title="Update this record">Update</a>
                               <td> <a href="{% url 'delete_physical_stock' product.id %}" data-toggle="tooltip" title="Delete this record"><img src="{% static 'images/delete.png'%}" width="30"></a></td>
+                            </td>
                             </tr>
                             
                            

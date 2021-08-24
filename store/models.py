@@ -93,10 +93,10 @@ class ShippingAddress(models.Model):
 ###############################################################################################################################
 #below is for the EMS 
 class PhysicalStockTable(models.Model):
-    part_number = models.CharField(max_length=255, blank=True, null=True)# unique prevents data duplication
-    description = models.CharField(max_length=255, blank=True, null=True)
-    quantity = models.IntegerField(default="0",blank=False,null=True)
-    price = models.IntegerField(default="0",blank=True, null=True)
+    part_number = models.CharField(max_length=255, blank=False, null=True,unique=True)# unique prevents data duplication
+    description = models.CharField(max_length=255, blank=False, null=True)
+    quantity = models.IntegerField(blank=False,null=True)
+    price = models.IntegerField(blank=False, null=True)
     comments = models.CharField(max_length=255, blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)#if adding now, pick currrent data and if updating stick to the original date
     last_updated = models.DateTimeField(auto_now_add=False, auto_now=True)
