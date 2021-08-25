@@ -4,6 +4,7 @@
 
 {% block content %}
 
+
     <!--Topside-->
     <div class="container">
       <div class="row mt-4">
@@ -18,13 +19,36 @@
                       </marquee>
                   </div>
               </div>
-              <!--start content of left column-->
-              <form method='POST' action=''>{% csrf_token %}
-                {{form|crispy}}<br><!-- this form is imported from the views under add_customers function and it was initially creaate
-                    in the forms.py file-->
-                    <input type="submit" value='Save'/>
-                </form>
-              <!--end of content of left column-->
+            
+                   
+                   
+
+
+
+
+    <!--start importtant libraries for the modal  -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <!--import for modal -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+    crossorigin="anonymous"></script>
+    <!--end importtant libraries for the modal  -->
+
+              <!-- Trigger the modal with a button -->
+                
+                
+                      <a class="nav-link text-red" href="#myModal" data-toggle="modal" data-target="#myModal">Add Product <span
+                              class="sr-only">(current)</span></a>
+                  
+          
 
 
           </div>
@@ -44,7 +68,7 @@
                               <th scope="col">Quantity</th>
                               <th scope="col">Price</th>
                               <th scope="col">Reorder Level</th>
-                              <th scope="col">More</th>
+                              <th scope="col">Details</th>
                               <th scope="col">Action</th>
                             </tr>
                           </thead>
@@ -65,14 +89,9 @@
                     {% endif %}
                               </td>  
 
-
-
-
-                              
-                             
                               <td>${{product.price}}</td> 
                               <td><a href="{% url 'reorder_level' product.id %}">{{product.reorder_level}}</a></td> 
-                              <td><a href="{% url 'product_full_details' product.id %}">More</a></td>
+                              <td><a href="{% url 'product_full_details' product.id %}">Details</a></td>
                               <td> <a href="{% url 'update_physical_stock' product.id %}" data-toggle="tooltip" title="Update this record">Update</a>
                               <td> <a href="{% url 'delete_physical_stock' product.id %}" data-toggle="tooltip" title="Delete this record"><img src="{% static 'images/delete.png'%}" width="30"></a></td>
                             </td>
@@ -91,6 +110,189 @@
       </div>
   </div>
   <!--End Topside-->
+
+
+<!--start of  modal part-->
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          
+        </div>
+        <div class="modal-body">
+
+
+
+<!--start of new modal desing-->
+
+    <!--Topside-->
+    <div class="container">
+      <div class="row mt-4">
+          <div class="col-md-6">
+              <div class="card">
+                  <div class="card-header bg-info text-white">
+
+                header
+                  </div>
+                  <div class="card-body">
+                      
+                    <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            test columns
+                           
+                            
+                          </tr>
+                        </thead>
+                        
+                        <tbody>
+                          <tr>
+                             
+
+
+     <!--start of the modal content which is the calculator section-->
+           <!--start content of left column-->
+           <form method='POST' action=''>{% csrf_token %}
+            {{form_product|crispy}}<br><!-- this form is imported from the views under add_customers function and it was initially creaate
+                in the forms.py file-->
+                <input type="submit" value='   Save    ' class="btn btn-success">
+               
+                <input type="submit" value='  Search  ' class="btn btn-success">
+
+
+
+
+
+
+
+
+
+                            </tr>
+                         
+                         
+                        </tbody>
+                      </table>
+                        
+                  </div>
+              </div>
+              <br><br>
+
+              <div class="card">
+                <div class="card-header bg-info text-white">
+
+              header
+                </div>
+                <div class="card-body">
+                    
+                  <table class="table table-hover">
+                      <thead>
+                        <tr>
+                            test columns
+                         
+                        
+                        </tr>
+                      </thead>
+                      
+                      <tbody>
+                        <tr>
+                            test rows
+                            
+                           
+                          </tr>
+                       
+                       
+                      </tbody>
+                    </table>
+                      
+                </div>
+            </div>
+           
+
+          </div>
+         
+          
+          <div class="col-md-6">
+              <div class="card">
+                  <div class="card-header bg-info text-white">
+                      {{header}} header
+                  </div>
+                  <div class="card-body">
+                      <div class="row">
+                         <!--main content-->
+                         <table class="table table-hover">
+                          <thead>
+                            <tr>
+                              
+                              
+                            test columns
+
+
+                            </tr>
+                          </thead>
+                          
+                          <tbody>
+                            <tr>
+                               
+                              test rows
+                              </tr>
+                           
+                           
+                          </tbody>
+                        </table>
+                          
+                          
+                      </div>
+                  </div>
+              </div>
+              <br><br>
+              
+
+              <div class="card">
+                <div class="card-header bg-info text-white">
+
+              header
+                </div>
+                <div class="card-body">
+                    
+                  <table class="table table-hover">
+                      <thead>
+                        <tr>
+                         test
+                        </tr>
+                      </thead>
+                      
+                      <tbody>
+                        <tr>
+                          test rows
+                            
+                          </tr>
+                       
+                       
+                      </tbody>
+                    </table>
+                      
+                </div>
+            </div>
+
+
+          </div>
+          
+      </div>
+  </div>
+  <!--End of new modal design-->
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          <!--end of the modal content which is the calculator section-->
 
 
 {% endblock %}

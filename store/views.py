@@ -141,25 +141,35 @@ def hrm(request):
 def stock(request):
     title="Physical Stock "
     header="Inventory Management System"
-    form =AddPhysicalProductForm(request.POST or None)
+    form_product =AddPhysicalProductForm(request.POST or None)
     physical_products=PhysicalStockTable.objects.all()
     
-    if form.is_valid():
-        form.save()
+    if form_product.is_valid():
+        form_product.save()
         messages.success(request, 'Stock added successfully')
-        form=AddPhysicalProductForm()#this clears out the form after adding the product
+        form_product=AddPhysicalProductForm()#this clears out the form after adding the product
     else:
-       form.non_field_errors
+       form_product.non_field_errors
+    
+    """  # start of the search form part.............................
+    form = AddPhysicalProductForm(request.POST or None)#this is for the search
+    if request.method == 'POST':
+    	query_table_content = AddPhysicalProductForm.objects.filter(part_number__icontains=form['part_number'].value(),
+									description__icontains=form['description'].value())
+     #End of search """
 
     context = {
         "title":title,
-        "form":form,
+        "form_product":form_product,
         "physical_products":physical_products,
         "header":header,
         
     }
 
     return render(request,'ems/stock/stock.html',context)
+
+
+    
 def delete_physical_stock(request,pk):
     delete_table_content=PhysicalStockTable.objects.get(id=pk)
     if request.method =="POST":
