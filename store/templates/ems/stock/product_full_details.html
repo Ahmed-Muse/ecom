@@ -24,7 +24,6 @@
                             <th scope="col">Quantity</th>
                             <th scope="col">Price</th>
                            
-                            
                           </tr>
                         </thead>
                         
@@ -44,12 +43,7 @@
                         
                   </div>
               </div>
-              <br><br>
-
-              
-
-
-
+              <br>
 
               <div class="card">
                 <div class="card-header bg-info text-white">
@@ -66,8 +60,6 @@
                           <th scope="col">Received By</th>
                           <th scope="col">Comments</th>
                           
-                         
-                        
                         </tr>
                       </thead>
                       
@@ -79,30 +71,52 @@
                             <td>{{query_table_content.received_by}}</td>
                             <td>{{query_table_content.comments}}</td>
                             
-                           
                           </tr>
-                       
                        
                       </tbody>
                     </table>
                       
                 </div>
             </div>
-           
+           <br>
+            <!--start this is ok-->
+            <div class="card">
+              <div class="card-header bg-info text-white">
+                  {{header}} header
+              </div>
+              <div class="card-body">
+                  <div class="row">
+                     <!--main content-->
+                     <table class="table table-hover">
+                      <thead>
+                        <tr>
+                         
+                          <th scope="col">Timestamp</th>
+                          <th scope="col">Last Updated</th>
 
+                        </tr>
+                      </thead>
+                      
+                      <tbody>
+                        <tr>
+                           
+                            <td>{{query_table_content.timestamp}}</td>
+                            <td>{{query_table_content.last_updated}}</td>
+                          </tr>
+                       
+                      </tbody>
+                    </table>
+                      
+                  </div>
+              </div>
+          </div>
+          <br>
 
-
-
-
-
-
-
-
-
+            <!--end section -->
           </div>
          
-          
           <div class="col-md-6">
+
               <div class="card">
                   <div class="card-header bg-info text-white">
                       {{header}} header
@@ -113,42 +127,60 @@
                          <table class="table table-hover">
                           <thead>
                             <tr>
-                              
-                              
                              
-                              <th scope="col">Timestamp</th>
-                              <th scope="col">Last Updated</th>
-
+                              <th scope="col">Weight</th>
+                              <th scope="col">Length</th>
+                              <th scope="col">Width</th>
+                              <th scope="col">Color</th>
 
                             </tr>
                           </thead>
                           
                           <tbody>
-                            <tr>
-                               
-                                
-                                <td>{{query_table_content.timestamp}}</td>
-                                <td>{{query_table_content.last_updated}}</td>
+                            <tr> 
+                                <td>{{query_table_content.weight}}</td>
+                                <td>{{query_table_content.length}}</td>
+                                <td>{{query_table_content.width}}</td>
+                                <td>{{query_table_content.color}}</td>
                               </tr>
-                           
-                           
                           </tbody>
                         </table>
-                          
-                          
+                        
                       </div>
                   </div>
               </div>
-              <br><br>
-              
+              <br>
 
-
-
-
-
-
-
-
+              <!-- start section which is ok-->
+              <div class="card">
+                <div class="card-header bg-info text-white">
+                    {{header}} header
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                       <!--main content-->
+                       <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">Reorder</th>
+                            <th scope="col">Expiry Date</th>
+                            <th scope="col"> Vendor</th>
+                          </tr>
+                        </thead>
+                        
+                        <tbody>
+                          <tr>
+                              <td>{{query_table_content.reorder_level}}</td>
+                              <td>{{query_table_content.expiry_date}}</td>
+                              <td>{{query_table_content.vendor}}</td>
+                            </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+            </div>
+            <br>
+<!--end section which is ok-->
 
               <div class="card">
                 <div class="card-header bg-info text-white">
@@ -185,24 +217,12 @@
                     </table>
                       
                 </div>
+
             </div>
 
+</div>
 
-
-
-
-
-
-
-
-          </div>
-          
-      </div>
+</div>
   </div>
-  <!--End Topside-->
-
-
-
-
 
         {% endblock %}

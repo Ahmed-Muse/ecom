@@ -107,6 +107,16 @@ class PhysicalStockTable(models.Model):
     issued_to = models.CharField(max_length=50,blank=True,null=True)
     created_by = models.CharField(max_length=50,blank=True,null=True)
     reorder_level = models.IntegerField(default='0',blank=True,null=True)
+
+    #item physical attributes
+    weight = models.CharField(max_length=50,blank=True,null=True)
+    length = models.CharField(max_length=50,blank=True,null=True)
+    width = models.CharField(max_length=50,blank=True,null=True)
+    color = models.CharField(max_length=50,blank=True,null=True)
+    expiry_date = models.CharField(max_length=50,blank=True,null=True)
+    vendor = models.CharField(max_length=50,blank=True,null=True)
+
+
     
     
     def __str__(self):

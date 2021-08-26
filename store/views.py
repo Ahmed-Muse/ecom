@@ -141,15 +141,17 @@ def hrm(request):
 def stock(request):
     title="Physical Stock "
     header="Inventory Management System"
-    form_product =AddPhysicalProductForm(request.POST or None)
+    form =AddPhysicalProductForm(request.POST or None)
+    form_test=AddProductForTestingOnlyForm(request.POST or None)
+    form_about_phys_items=AboutPhysicalItemsForm(request.POST or None)
     physical_products=PhysicalStockTable.objects.all()
     
-    if form_product.is_valid():
-        form_product.save()
+    if form.is_valid():
+        form.save()
         messages.success(request, 'Stock added successfully')
-        form_product=AddPhysicalProductForm()#this clears out the form after adding the product
+        form=AddPhysicalProductForm()#this clears out the form after adding the product
     else:
-       form_product.non_field_errors
+       form.non_field_errors
     
     """  # start of the search form part.............................
     form = AddPhysicalProductForm(request.POST or None)#this is for the search
@@ -160,9 +162,11 @@ def stock(request):
 
     context = {
         "title":title,
-        "form_product":form_product,
+        "form":form,
         "physical_products":physical_products,
         "header":header,
+        "form_test":form_test,
+        "form_about_phys_items":form_about_phys_items,
         
     }
 
@@ -194,6 +198,7 @@ def update_physical_stock(request, pk):
             return redirect('/stock')#just redirection page
     context = {
 		'form':form,
+        "update_table_content":update_table_content,
     }
     return render(request, 'ems/stock/stock.html', context)#this is the main page rendered first
 
@@ -241,7 +246,7 @@ def issue_physical_items(request, pk):
 		"form": form,
 		#"username": 'Issue By: ' + str(request.user),
 	}
-    return render(request, "ems/stock/stock.html", context)
+    return render(request, "ems/stock/issue_or_receive_physical_items.html", context)
 def receive_physical_items(request, pk):
     query_table_content = PhysicalStockTable.objects.get(id=pk)
     form = ReceivePhysicalItemsForm(request.POST or None, instance=query_table_content)
@@ -260,7 +265,7 @@ def receive_physical_items(request, pk):
 			"form": form,
 			#"username": 'Receive By: ' + str(request.user),
 		}
-    return render(request, "ems/stock/stock.html", context)
+    return render(request, "ems/stock/issue_or_receive_physical_items.html", context)
 
 def reorder_level(request,pk):
     query_table_content =PhysicalStockTable.objects.get(id=pk)

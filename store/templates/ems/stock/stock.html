@@ -1,10 +1,7 @@
 {% extends "ems/base_dashboard.html"%}
 {% load static %}
 {% load crispy_forms_tags %}
-
 {% block content %}
-
-
     <!--Topside-->
     <div class="container">
       <div class="row mt-4">
@@ -20,12 +17,7 @@
                   </div>
               </div>
             
-                   
-                   
-
-
-
-
+            
     <!--start importtant libraries for the modal  -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -42,20 +34,13 @@
     crossorigin="anonymous"></script>
     <!--end importtant libraries for the modal  -->
 
-              <!-- Trigger the modal with a button -->
+            
                 
-                
-                      <a class="nav-link text-red" href="#myModal" data-toggle="modal" data-target="#myModal">Add Product <span
-                              class="sr-only">(current)</span></a>
-                  
-          
-
-
           </div>
           <div class="col-md-8">
               <div class="card">
                   <div class="card-header bg-info text-white">
-                      {{header}}
+                      {{header}} 
                   </div>
                   <div class="card-body">
                       <div class="row">
@@ -63,19 +48,25 @@
                          <table class="table table-hover">
                           <thead>
                             <tr>
-                             
                               <th scope="col">Description</th>
                               <th scope="col">Quantity</th>
                               <th scope="col">Price</th>
                               <th scope="col">Reorder Level</th>
                               <th scope="col">Details</th>
                               <th scope="col">Action</th>
+                              <th scope="col">
+                                  <!-- Trigger the modal with a button -->
+                                <a href="#myModal" data-toggle="modal" data-target="#myModal">Add 
+                                </a>
+
+                              </th>
                             </tr>
                           </thead>
+
                           {% for product in physical_products %}
                           <tbody>
                             <tr>
-                             
+                              
                               <td>{{product.description}}</td>
                               <td>
 
@@ -109,105 +100,91 @@
           </div>
       </div>
   </div>
-  <!--End Topside-->
-
-
+ 
 <!--start of  modal part-->
 <div class="container">
-  <!-- Modal -->
+  
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
+         
           
         </div>
         <div class="modal-body">
+          <!--this is  tag form part-->
+        <form method='POST' action=''>{% csrf_token %}
 
-
-
-<!--start of new modal desing-->
-
-    <!--Topside-->
-    <div class="container">
+<div class="container">
       <div class="row mt-4">
           <div class="col-md-6">
               <div class="card">
                   <div class="card-header bg-info text-white">
 
-                header
+                Important Information
+                
                   </div>
-                  <div class="card-body">
-                      
-                    <table class="table table-hover">
-                        <thead>
-                          <tr>
-                            test columns
-                           
-                            
-                          </tr>
-                        </thead>
-                        
-                        <tbody>
-                          <tr>
-                             
-
-
-     <!--start of the modal content which is the calculator section-->
-           <!--start content of left column-->
-           <form method='POST' action=''>{% csrf_token %}
-            {{form_product|crispy}}<br><!-- this form is imported from the views under add_customers function and it was initially creaate
-                in the forms.py file-->
-                <input type="submit" value='   Save    ' class="btn btn-success">
-               
-                <input type="submit" value='  Search  ' class="btn btn-success">
-
-
-
-
-
-
-
-
-
-                            </tr>
-                         
-                         
-                        </tbody>
-                      </table>
-                        
-                  </div>
+                  
+        <div class="card-body">      
+        <div class="row mt-4">
+           <div class="col-md-6">
+            {{ form.part_number|as_crispy_field }}<br>
               </div>
-              <br><br>
+
+              <div class="col-md-6">
+                {{ form.description|as_crispy_field }}<br>
+              </div> 
+        </div> 
+        </div>
+                  
+                <div class="card-body">
+                  <div class="row mt-4">
+                    <div class="col-md-6">
+                     {{ form.quantity|as_crispy_field }}<br><!-- this form is imported from the views under add_customers function and it was initially creaate
+                         in the forms.py file-->
+                       </div>
+                       <div class="col-md-6">
+                         {{ form.price|as_crispy_field }}<br>
+                        
+                        <!--end of form-->
+                         
+                              </div>    
+                              </div>
+                              </div>
+
+              </div>
+              
+              <br>
 
               <div class="card">
                 <div class="card-header bg-info text-white">
-
-              header
+                  Vendor details
+              
                 </div>
                 <div class="card-body">
-                    
+
                   <table class="table table-hover">
-                      <thead>
-                        <tr>
-                            test columns
-                         
-                        
-                        </tr>
-                      </thead>
-                      
-                      <tbody>
-                        <tr>
-                            test rows
-                            
-                           
-                          </tr>
-                       
-                       
-                      </tbody>
+                    
+                          <div class="row mt-4">
+                            <div class="col-md-6">
+                             {{ form.reorder_level|as_crispy_field }}<br><!-- this form is imported from the views under add_customers function and it was initially creaate
+                                 in the forms.py file-->
+                               </div>
+                               <div class="col-md-6">
+                                 {{ form.vendor|as_crispy_field }}<br>
+                                
+                                <!--end of form-->
+                                 
+                                      </div>    
+                                      </div> 
+
+                          </div>
                     </table>
                       
                 </div>
+               
             </div>
+           
            
 
           </div>
@@ -216,83 +193,79 @@
           <div class="col-md-6">
               <div class="card">
                   <div class="card-header bg-info text-white">
-                      {{header}} header
+                      Item details
+
+
                   </div>
                   <div class="card-body">
                       <div class="row">
-                         <!--main content-->
+                
                          <table class="table table-hover">
-                          <thead>
-                            <tr>
-                              
-                              
-                            test columns
-
-
-                            </tr>
-                          </thead>
-                          
-                          <tbody>
-                            <tr>
-                               
-                              test rows
-                              </tr>
-                           
-                           
-                          </tbody>
+                         
+                              <div class="row mt-4">
+                                <div class="col-md-6">
+                                 {{ form.weight|as_crispy_field }}<br>
+                                    
+                                   </div>
+                                   <div class="col-md-6">
+                                     {{ form.length|as_crispy_field }}<br>
+                                  
+                                     
+                                          </div>    
+                                          </div> 
                         </table>
-                          
+
+                        <div class="row mt-4">
+                          <div class="col-md-6">
+                           {{ form.width|as_crispy_field }}<br>
+                            
+                             </div>
+                             <div class="col-md-6">
+                               {{ form.comments|as_crispy_field }}<br>
+                              
+                                    </div>    
+                                    </div> 
                           
                       </div>
                   </div>
               </div>
-              <br><br>
+              <br>
               
-
               <div class="card">
                 <div class="card-header bg-info text-white">
 
-              header
+              Extra details
                 </div>
                 <div class="card-body">
-                    
-                  <table class="table table-hover">
-                      <thead>
-                        <tr>
-                         test
-                        </tr>
-                      </thead>
-                      
-                      <tbody>
-                        <tr>
-                          test rows
-                            
-                          </tr>
-                       
-                       
-                      </tbody>
-                    </table>
-                      
+                          <div class="row mt-4">
+                            <div class="col-md-6">
+                             {{ form.color|as_crispy_field }}<br>
+                                 
+                               </div>
+                               <div class="col-md-6">
+                                 {{ form.expiry_date|as_crispy_field }}<br>
+                                
+                               
+                                 
+                                      </div>    
+                                      </div> 
                 </div>
             </div>
 
 
           </div>
-          
+          <div class="modal-footer">
+            <input type="submit" value='   Save    ' class="btn btn-success">
+            <button type="button" class="btn btn-success" data-dismiss="modal">Close</button></div>
       </div>
+      
   </div>
-  <!--End of new modal design-->
-
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  
+ 
 </div>
-          <!--end of the modal content which is the calculator section-->
+</div>
+</div><!--end of modal part-->
 
+</div>
 
 {% endblock %}

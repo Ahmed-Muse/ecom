@@ -34,7 +34,15 @@
                       <marquee behavior="" direction="left">
                           <h3 class="my-4"> {{title}}</h3> </h3>
                       </marquee>
+
+                      <form method='POST' action=''>{% csrf_token %}
+                        {{form|crispy}}<br><!-- this form is imported from the views under add_customers function and it was initially creaate
+                            in the forms.py file-->
+                            <input type="submit" value='Save'/>
+                        </form>
+
                   </div>
+                  
               </div>
               
 

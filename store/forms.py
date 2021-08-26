@@ -40,7 +40,8 @@ class AddShippingAdressOnlineForm(forms.ModelForm): #the forms here is the one i
 class AddPhysicalProductForm(forms.ModelForm): #the forms here is the one imported up there.
     class Meta:
         model = PhysicalStockTable
-        fields = ["part_number",'description','quantity','price','comments']
+        fields = ["part_number",'description','quantity','price','comments','weight','length',
+        'width','color',"expiry_date",'reorder_level',"vendor"]
 class IssuePhysicalItemsForm(forms.ModelForm):
     	class Meta:
             model = PhysicalStockTable
@@ -53,6 +54,11 @@ class PhysicalItemsReorderLevelForm(forms.ModelForm):
     	class Meta:
             model = PhysicalStockTable
             fields = ['reorder_level']
+
+class AboutPhysicalItemsForm(forms.ModelForm):
+    	class Meta:
+            model = PhysicalStockTable
+            fields = ['weight','length']
 
 
 
