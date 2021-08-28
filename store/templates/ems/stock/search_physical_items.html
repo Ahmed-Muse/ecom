@@ -26,14 +26,19 @@
                           <h3 class="my-4"> {{title}}</h3> </h3>
                       </marquee>
 
-                     form here
+                    
                         </form>
-
+                        
                   </div>
+                  <form method='POST' action=''>{% csrf_token %}
+                  {{search_form.part_number|as_crispy_field}}
+                  {{search_form.description|as_crispy_field}}
                   
               </div>
+             <hr>
+             
+              <button  class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
               
-
           </div>
           <div class="col-md-8">
               <div class="card">
@@ -47,23 +52,32 @@
                           <thead>
                             <tr>
                               <th scope="col">ID</th>
-                              <th scope="col">PN</th>
+                              <th scope="col">Counter</th>
+                              <th scope="col">Part No.</th>
                               <th scope="col">Description</th>
                               <th scope="col">Quantity</th>
                               <th scope="col">Price</th>
+                              <th scope="col">Comments</th>
                               
                             </tr>
                           </thead>
-                          
+                          {% for product in search_return %}
                           <tbody>
                             <tr>
-                               content
+                                <td>{{product.id}}</td>
+                                <td>{{forloop.counter}}</td>
+                               <td>{{product.part_number}}</td>
+                               <td>{{product.description}}</td>
+                               <td>{{product.quantity}}</td>
+                               <td>{{product.price}}</td>
+                               <td>{{product.comments}}</td>
                                 
                                
                               </tr>
                            
                            
                           </tbody>
+                          {% endfor %}
                         </table>
                           
                           

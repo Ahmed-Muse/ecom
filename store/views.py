@@ -5,7 +5,9 @@ import json
 import datetime
 from .utils import *
 from .forms import *
-from django.contrib import messages
+from django.contrib import messages#for flash messages
+
+from django.core.paginator import Paginator#this is important for the pagination
 # Create your views here.
 
 def store(request):
@@ -142,7 +144,6 @@ def stock(request):
     title="Physical Stock "
     header="Inventory Management System"
     form =AddPhysicalProductForm(request.POST or None)
-    form_test=AddProductForTestingOnlyForm(request.POST or None)
     form_about_phys_items=AboutPhysicalItemsForm(request.POST or None)
     physical_products=PhysicalStockTable.objects.all()
     
@@ -153,20 +154,35 @@ def stock(request):
     else:
        form.non_field_errors
     
-    """  # start of the search form part.............................
-    form = AddPhysicalProductForm(request.POST or None)#this is for the search
-    if request.method == 'POST':
-    	query_table_content = AddPhysicalProductForm.objects.filter(part_number__icontains=form['part_number'].value(),
-									description__icontains=form['description'].value())
-     #End of search """
+        #start of the search form part.............................
+        #search_form = SearchPhysicalItemsForm(request.POST or None)#this is for the search
+        #if request.method == 'POST':
+    	#query_table_content = SearchPhysicalItemsForm.objects.filter(part_number__icontains=form['part_number'].value(),
+		#							description__icontains=form['description'].value())
+        #End of search 
+    
+    #start of the pagination setup
+    #import pagination library up, then do code below, then pass it to the templates
+    pagination=Paginator(PhysicalStockTable.objects.all(),7)
+    page=request.GET.get('page')#keep track of the pagination - each time you click, you need to know the page
+    physical_products=pagination.get_page(page)#now this puts all together
+    #next, pass this to the templates page (physical_products)
+
+    #create a string that is equal to the number of pages in terms of its characters...like if page has 5 pages, then ahmed has the same
+    page_num="a"*physical_products.paginator.num_pages
+
+    #end of the pagination setup
+        
 
     context = {
         "title":title,
         "form":form,
         "physical_products":physical_products,
         "header":header,
-        "form_test":form_test,
+        "page_num":page_num,
+        
         "form_about_phys_items":form_about_phys_items,
+      
         
     }
 
@@ -200,7 +216,7 @@ def update_physical_stock(request, pk):
 		'form':form,
         "update_table_content":update_table_content,
     }
-    return render(request, 'ems/stock/stock.html', context)#this is the main page rendered first
+    return render(request, 'ems/stock/update_physical_stock.html', context)#this is the main page rendered first
 
 
 def customers(request):
@@ -290,6 +306,38 @@ def product_full_details(request,pk):
         
     }
     return render(request,"ems/stock/product_full_details.html",context)
+
+def reorder_level(request,pk):
+    query_table_content =PhysicalStockTable.objects.get(id=pk)
+    form=PhysicalItemsReorderLevelForm(request.POST or None,instance=query_table_content)
+    if form.is_valid():
+        instance=form.save(commit=False)
+        instance.save()
+      
+        return redirect('/stock')
+    context={
+        "instance":query_table_content,
+        "form":form,
+    }
+    return render(request,"ems/stock/stock.html",context)
+
+def search_physical_items(request):
+    search_return=PhysicalStockTable.objects.all()
+    search_form=SearchPhysicalItemsForm(request.POST or None)
+    if request.method == 'POST':
+        search_return = PhysicalStockTable.objects.filter(part_number__icontains=search_form['part_number'].value(),
+								description__icontains=search_form['description'].value())
+      
+    
+    
+   
+    context={
+        "search_form":search_form,
+        "search_return":search_return,
+        
+        
+    }
+    return render(request,"ems/stock/search_physical_items.html",context)
 
 
 
@@ -384,8 +432,8 @@ def shipping_address_online(request):
 ####################### below is for testing only
 def test(request):
     title="Testing Page"
-    form=AddProductForTestingOnlyForm(request.POST or None)
-    products = ForTestingOnly.objects.all()
+    form=AddPhysicalProductForm(request.POST or None)
+    products = PhysicalStockTable.objects.all()
     
    
     context={

@@ -60,6 +60,12 @@ class AboutPhysicalItemsForm(forms.ModelForm):
             model = PhysicalStockTable
             fields = ['weight','length']
 
+class SearchPhysicalItemsForm(forms.ModelForm):
+    	class Meta:
+            model = PhysicalStockTable
+            fields = ['part_number','description']
+
+
 
 
 ############################################################################################################################

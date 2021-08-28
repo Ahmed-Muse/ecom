@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     #'store',
     'store.apps.StoreConfig',
     'crispy_forms',
+    'systemadmins',
     
 ]
 

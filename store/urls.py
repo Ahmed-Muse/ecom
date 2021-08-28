@@ -25,13 +25,14 @@ urlpatterns = [
 	path('shipping_address_online/', views.shipping_address_online, name="shipping_address_online"),
 	path('test/', views.test, name="test"),
 	path('delete_physical_stock/<str:pk>/', views.delete_physical_stock, name="delete_physical_stock"),
-	path('update_physical_stock/<str:pk>/', views.update_physical_stock, name="update_physical_stock"),
+	path('update_physical_stock/<str:pk>/', views.update_physical_stock, name="update_physical_stock"),#no template here
 	path('issue_physical_items/<str:pk>/', views.issue_physical_items, name="issue_physical_items"),
 	path('issue_or_receive_physical_items/<str:pk>/', views.issue_or_receive_physical_items, name="issue_or_receive_physical_items"),
 	path('issue_physical_items/<str:pk>/', views.issue_physical_items, name="issue_physical_items"),#Note that this does not have template
     path('receive_physical_items/<str:pk>/', views.receive_physical_items, name="receive_physical_items"),#No template
 	path('reorder_level/<str:pk>/', views.reorder_level, name="reorder_level"),
 	path('product_full_details/<str:pk>/', views.product_full_details, name="product_full_details"),
+	path('search_physical_items/', views.search_physical_items, name="search_physical_items"),
 	
 
 ]

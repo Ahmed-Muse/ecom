@@ -15,9 +15,37 @@
                           <h3 class="my-4"> {{title}}</h3> </h3>
                       </marquee>
                   </div>
-              </div>
+                  
+              </div><br>
+              <div>
+              <!-- Trigger the modal with a button -->
+              <a  style="font-size: 20px;background-color: #17a2b8!important; color: white;padding: 2px 22px;text-align: center;
+              display: inline-block;margin: 1px 10px;cursor: pointer;" href="#myModal" data-toggle="modal" data-target="#myModal"  >Add   
+              </a>
+              
+              <a  style="font-size: 20px;background-color: #17a2b8!important; color: white;padding: 2px 10px;text-align: center;
+              display: inline-block;margin: 5px 20px;cursor: pointer;">Invoice</a>
+            <a href="{% url 'search_physical_items' %}" style="font-size: 20px;background-color: #17a2b8!important; color: white;padding: 2px 10px;text-align: center;
+            display: inline-block;margin: 5px 10px;cursor: pointer;">Search</a>
             
+            </div>
             
+
+<!--start of dynamically adding field to form... on button click, create text field-->
+<input type="button" value="+" onclick="addInput()"/>
+<span id="responce"></span>
+<script>
+var countBox =1;
+var boxName = 0;
+function addInput()
+{
+     var boxName="On button click, create text field"+countBox; 
+document.getElementById('responce').innerHTML+='<br/><input type="text" id="'+boxName+'" value="'+boxName+'" "  /><br/>';
+     countBox += 1;
+}
+</script>
+<!--end of... on button click, create text field-->
+          
     <!--start importtant libraries for the modal  -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -33,6 +61,7 @@
     integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
     crossorigin="anonymous"></script>
     <!--end importtant libraries for the modal  -->
+    
 
             
                 
@@ -51,7 +80,7 @@
                               <th scope="col">Description</th>
                               <th scope="col">Quantity</th>
                               <th scope="col">Price</th>
-                              <th scope="col">Reorder Level</th>
+                              
                               <th scope="col">Details</th>
                               <th scope="col">Action</th>
                               <th scope="col">
@@ -81,9 +110,9 @@
                               </td>  
 
                               <td>${{product.price}}</td> 
-                              <td><a href="{% url 'reorder_level' product.id %}">{{product.reorder_level}}</a></td> 
+                             
                               <td><a href="{% url 'product_full_details' product.id %}">Details</a></td>
-                              <td> <a href="{% url 'update_physical_stock' product.id %}" data-toggle="tooltip" title="Update this record">Update</a>
+                              <td> <a href="{% url 'update_physical_stock' product.id %}" data-toggle="tooltip" title="Update this record"><img src="{% static 'images/edit.png'%}" width="30"></a>
                               <td> <a href="{% url 'delete_physical_stock' product.id %}" data-toggle="tooltip" title="Delete this record"><img src="{% static 'images/delete.png'%}" width="30"></a></td>
                             </td>
                             </tr>
@@ -96,7 +125,59 @@
                           
                       </div>
                   </div>
+                  
               </div>
+
+              <!--start of the pagination section-->
+              
+              <!--the line below shows the pagination on the page-->
+             <!--{{physical_products}} -->
+              
+              <!--
+              Has Previous {{physical_products.has_previous}}
+              <br>
+              Has Next {{physical_products.has_next }}
+              <br>
+              Current Page {{physical_products.number }}
+              <br>
+              Number of pages {{physical_products.paginator.num_pages }}
+              -->
+              <!--the styling of the pagination using Bootstrap...code below is from Bootstrap-->
+              <div style="margin-left: 450px;">
+              <nav aria-label="Page navigation example">
+                <ul class="pagination">
+              {% if physical_products.has_previous %}
+              <li class="page-item " > <a class="page-link" href="?page=1">&laquo First </a></li><!-- &laquo; are for the arrows-->
+              <li class="page-item"> <a class="page-link" href="?page={{physical_products.previous_page_number }}">Previous </a></li>
+
+              {% endif %}
+              
+              <li class="page-item disabled">
+                  <a href="#" class="page-link" > Page {{physical_products.number}} of {{physical_products.paginator.num_pages}}
+              </a>
+            </li>
+          
+          <!--
+          {% for pages in page_num %}-->
+          <!--create a name that has the same number of characters as the number of the list in physical_products.paginator.num_pages
+          in the view-->
+          <!--
+          <li class="page-item ">  <a class="page-link" href="?page={{forloop.counter}}">
+          {{forloop.counter}}</a></li>
+          {% endfor %}
+          -->
+
+            {% if physical_products.has_next %}
+              <li class="page-item"> <a class="page-link" href="?page={{ physical_products.next_page_number }}">Next</a></li>
+              <li class="page-item"> <a class="page-link" href="?page={{ physical_products.paginator.num_pages }}">Last &raquo </a></li>
+              {% endif %}
+                  
+            </ul>
+          </nav>
+          </div>
+
+              <!--end of the pagination section-->
+
           </div>
       </div>
   </div>
@@ -255,6 +336,7 @@
 
           </div>
           <div class="modal-footer">
+            
             <input type="submit" value='   Save    ' class="btn btn-success">
             <button type="button" class="btn btn-success" data-dismiss="modal">Close</button></div>
       </div>
@@ -266,6 +348,8 @@
 </div>
 </div><!--end of modal part-->
 
+
 </div>
+
 
 {% endblock %}
