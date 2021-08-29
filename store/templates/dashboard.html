@@ -69,19 +69,29 @@
                  
 
                 
-
+                {% if user.is_authenticated %}
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link text-white" href="{% url 'systemadminlogin' %}">Login <span
+                        <a class="nav-link text-white" href="{% url 'logoutpage' %}">Logout <span
                                 class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Logout</a>
-                    </li>
-                
-                
-            </ul>
+                   </ul>
 
+                {% else %}
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="{% url 'loginpage' %}">Login <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+            </ul>
+            {% endif %}
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link text-white" href="{% url 'registerpage' %}">Register <span
+                            class="sr-only">(current)</span></a>
+                </li>
+        </ul>
             </div>
         </div>
     </nav>

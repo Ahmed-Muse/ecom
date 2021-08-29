@@ -65,16 +65,42 @@
                 </ul>
 
                
-               
+               <style>
+                   #msg{
+                       font-size: 18px;
+                       color: white;
+                       margin-left: 500px;
+                   }
+               </style>
                 
+                {% if user.is_authenticated %}
 
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link text-white" href="{% url 'systemadminlogin' %}">Login <span
-                                class="sr-only">(current)</span></a>
-                    </li>
-                      
+                        <span id="msg">Hi {{request.user}} </span>
+                       <span class="sr-only">(current)</span></a>
+                        
+                    </li> 
                 </ul>
+
+
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="{% url 'logoutpage' %}"> Logout <span
+                                class="sr-only">(current)</span></a>
+                    </li> 
+                </ul>
+                {% else %}
+                <ul class="navbar-nav ml-auto">
+                
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="{% url 'loginpage' %}">Login <span
+                                class="sr-only">(current)</span></a>
+                    </li> 
+                </ul>
+                {% endif %}
+
+
 
             </div>
         </div>

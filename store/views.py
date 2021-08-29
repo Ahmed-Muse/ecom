@@ -5,6 +5,7 @@ import json
 import datetime
 from .utils import *
 from .forms import *
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages#for flash messages
 
 from django.core.paginator import Paginator#this is important for the pagination
@@ -118,6 +119,9 @@ def website(request):
     }
 
     return render(request,'website.html',context)
+
+#@login_required#this is the decorator to ensure user is logged in to see this view
+@login_required(login_url='loginpage')
 def dashboard(request):
     
     context = {

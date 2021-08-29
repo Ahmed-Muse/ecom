@@ -22,14 +22,30 @@
        
 
        
-       
+       {% if user.is_authenticated %}
         
         <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a></li><!--This are the view values-->
+        {% endif %}
         <li class="nav-item"><a class="nav-link" href="{% url 'test' %}">Test</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'systemadminlogin' %}">login</a></li>
         
+        {% if user.is_authenticated %}
+                
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="{% url 'logoutpage' %}">Logout <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+                 
+
+                {% else %}
+               
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="{% url 'loginpage' %}">Login <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+           
+            {% endif %}
         
-        
+          </ul>
         
     
 

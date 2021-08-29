@@ -137,6 +137,9 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/images/'
 MEDIA_ROOT=os.path.join(BASE_DIR, 'static/images')# this is for adding image field and this is where the image will sit
 
+LOGIN_REDIRECT_URL='dashboard'#redirects to dashboard after login
+LOGOUT_REDIRECT_URL='dashboard'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
