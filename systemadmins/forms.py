@@ -11,6 +11,9 @@ class AddUserDetailsForm(forms.ModelForm): #the forms here is the one imported u
         fields = ["username",'password']
 
 class CreateUserForm(UserCreationForm):
+    first_name=forms.CharField(max_length=50)
+    last_name=forms.CharField(max_length=50)
+   
     class Meta:
         model=User
-        fields=['username','email','password1','password2']#all these fields are from django
+        fields=['username','first_name','last_name','email','password1','password2']#all these fields are from django

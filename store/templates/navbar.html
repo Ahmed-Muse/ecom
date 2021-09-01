@@ -19,10 +19,12 @@
         
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="#contact">Contacts</a></li>
+        <li class="nav-item"><a class="nav-link" href="admin">Admin</a></li>
        
 
-       
-       {% if user.is_authenticated %}
+        <!--{% if request.user.is_staff %} this is athe same as admin-->
+        <!--{% endif %}-->
+       {% if request.user.is_authenticated %}
         
         <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a></li><!--This are the view values-->
         {% endif %}
@@ -46,7 +48,7 @@
             {% endif %}
         
           </ul>
-        
+          <li class="nav-item"><a class="nav-link" href="{% url 'language' %}">search</a></li>
     
 
 <!--start of modal content for the version-->

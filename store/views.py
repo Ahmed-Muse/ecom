@@ -7,9 +7,23 @@ from .utils import *
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages#for flash messages
+from django.http import HttpResponse# this is necessary for generating text files
 
 from django.core.paginator import Paginator#this is important for the pagination
 # Create your views here.
+from systemadmins.decorators import *
+import csv# stands for comma separated values
+
+#start of libraries for generating pdf files
+#BELOW IS FOR GENERATING PDFS
+#pip install reportlab
+from django.http import FileResponse
+import io#this is input output
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
+from reportlab.lib.pagesizes import letter
+
+#end of files for generating pdf files
 
 def store(request):
     data=cartData(request)
@@ -120,8 +134,10 @@ def website(request):
 
     return render(request,'website.html',context)
 
-#@login_required#this is the decorator to ensure user is logged in to see this view
-@login_required(login_url='loginpage')
+@login_required#this is the decorator to ensure user is logged in to see this view
+#@allowed_users(allowed_roles=['admin'])# this page will be seen by only the admins ....this docorator is from the systemadmins app...you can also add other lists
+#@login_required(login_url='loginpage')
+#@admin_only
 def dashboard(request):
     
     context = {
@@ -137,6 +153,7 @@ def base_dashboard(request):
     }
 
     return render(request,'base_dashboard.html',context)
+#@allowed_users(allowed_roles=['admin'])
 def hrm(request):
     
     context = {
@@ -144,12 +161,14 @@ def hrm(request):
     }
 
     return render(request,'ems/hrm/hrm.html',context)
+@allowed_users(allowed_roles=['admin'])
+#@admin_only
 def stock(request):
     title="Physical Stock "
     header="Inventory Management System"
     form =AddPhysicalProductForm(request.POST or None)
     form_about_phys_items=AboutPhysicalItemsForm(request.POST or None)
-    physical_products=PhysicalStockTable.objects.all()
+    physical_products=PhysicalStockTable.objects.all().order_by('description')
     
     if form.is_valid():
         form.save()
@@ -193,7 +212,7 @@ def stock(request):
     return render(request,'ems/stock/stock.html',context)
 
 
-    
+#@allowed_users(allowed_roles=['admin'])  
 def delete_physical_stock(request,pk):
     delete_table_content=PhysicalStockTable.objects.get(id=pk)
     if request.method =="POST":
@@ -205,7 +224,7 @@ def delete_physical_stock(request,pk):
         "delete_table_content":delete_table_content,
     }
     return render(request,'ems/stock/delete_physical_stock.html',context)
-
+#@allowed_users(allowed_roles=['admin'])
 def update_physical_stock(request, pk):
     update_table_content= PhysicalStockTable.objects.get(id=pk)
     form = AddPhysicalProductForm(instance= update_table_content)#insert the content of the table stored in the selected id in the update form
@@ -222,8 +241,71 @@ def update_physical_stock(request, pk):
     }
     return render(request, 'ems/stock/update_physical_stock.html', context)#this is the main page rendered first
 
+def product_list_text_file(request):
+    response=HttpResponse(content_type='text/plain')#this means that instead of returning a page, return a text file
+    response['Content-Disposition']='attachment; filename=products.txt'
+    #now designate the model
+    products=PhysicalStockTable.objects.all()
+    #now loop through the list and output
+    #writer = csv.writer(response)#this is showing error so comments out all
+    #writer.writerow(['PART_NUMBER', 'DESCRIPTION', 'QUANTITY_IN_STORE','PRICE','COMMENTS'])
+    #products.description.writerow(['PART_NUMBER', 'DESCRIPTION', 'QUANTITY_IN_STORE','PRICE','COMMENTS'])
+    product_lines=[]#create an empty list
+    for product in products:
+        product_lines.append(f'{product.description}  {product.quantity} {product.price}\n')
+    response.writelines(product_lines)
+    return response
 
-def customers(request):
+def product_list_csv(request):
+    response=HttpResponse(content_type='text/csv')#this means that instead of returning a page, return a text file
+    response['Content-Disposition']='attachment; filename=products.csv'
+    #now designate the model
+    products=PhysicalStockTable.objects.all()
+    #create csv writer
+    writer = csv.writer(response)#this writes to the file
+    #add column headings to the csv file
+    writer.writerow(['DESCRIPTION', 'QUANTITY','PRICE'])
+    #products.description.writerow(['PART_NUMBER', 'DESCRIPTION', 'QUANTITY_IN_STORE','PRICE','COMMENTS'])
+   
+    for product in products:
+        writer.writerow([product.description, product.quantity, product.price])
+    
+    return response
+
+def product_list_pdf(request):
+    #create bytestream buffer
+    buf=io.BytesIO()
+    #create canvas
+    canv=canvas.Canvas(buf, pagesize=letter, bottomup=0)#letter sized regular paper size
+
+    #create a text object
+    textob=canv.beginText()
+    textob.setTextOrigin(inch,inch)
+    textob.setFont('Helvetica',14)
+    products=PhysicalStockTable.objects.all()
+
+    product_lines=[]#create an empty list
+    str(product_lines.append('Description'))+str(product_lines.append('Quantity'))
+    for product in products:
+        #product_lines.append(f'{product.description} {product.quantity} {product.price} \n')
+        product_lines.append(product.description)
+        product_lines.append(product.quantity)
+        product_lines.append(product.price)
+        product_lines.append('................')
+ 
+    #loop through
+    for product_line in product_lines:
+        #textob.textLine(product_line) this gave errors
+        textob.textLine(str(product_line))
+    canv.drawText(textob)
+    canv.showPage()
+    canv.save()
+    buf.seek(0)
+    return FileResponse(buf, as_attachment=True,filename='product.pdf')
+
+    #add some lines of text
+
+def customers(request):   
     
     context = {
         
@@ -450,3 +532,8 @@ def test(request):
         
         }
     return render(request,'test.html',context)
+
+def language(request):
+    languages = Language.objects.all()
+    physical_products=PhysicalStockTable.objects.all()
+    return render(request,'language.html',{"languages":languages,"product":physical_products})

@@ -33,6 +33,14 @@ urlpatterns = [
 	path('reorder_level/<str:pk>/', views.reorder_level, name="reorder_level"),
 	path('product_full_details/<str:pk>/', views.product_full_details, name="product_full_details"),
 	path('search_physical_items/', views.search_physical_items, name="search_physical_items"),
+	path('product_list_text_file/', views.product_list_text_file, name="product_list_text_file"),
+	path('product_list_csv/', views.product_list_csv, name="product_list_csv"),
+	path('product_list_pdf/', views.product_list_pdf, name="product_list_pdf"),
+
+	#below is for test only
+	path('language/', views.language, name="language"),
+	
+	
 	
 
 ]

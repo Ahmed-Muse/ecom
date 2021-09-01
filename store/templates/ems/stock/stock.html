@@ -17,6 +17,9 @@
                   </div>
                   
               </div><br>
+ 
+    
+              
               <div>
               <!-- Trigger the modal with a button -->
               <a  style="font-size: 20px;background-color: #17a2b8!important; color: white;padding: 2px 22px;text-align: center;
@@ -27,6 +30,14 @@
               display: inline-block;margin: 5px 20px;cursor: pointer;">Invoice</a>
             <a href="{% url 'search_physical_items' %}" style="font-size: 20px;background-color: #17a2b8!important; color: white;padding: 2px 10px;text-align: center;
             display: inline-block;margin: 5px 10px;cursor: pointer;">Search</a>
+            
+
+            
+            <a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'product_list_text_file' %}">TextFile</a>
+            <a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'product_list_csv' %}">CSV</a>
+            <a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'product_list_pdf' %}">PDF</a>
+            <input type="text" id="tags" placeholder="Autocomplete search">
+
             
             </div>
             
@@ -61,6 +72,8 @@ document.getElementById('responce').innerHTML+='<br/><input type="text" id="'+bo
     integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
     crossorigin="anonymous"></script>
     <!--end importtant libraries for the modal  -->
+    
+
     
 
             
@@ -193,6 +206,7 @@ document.getElementById('responce').innerHTML+='<br/><input type="text" id="'+bo
           
         </div>
         <div class="modal-body">
+
           <!--this is  tag form part-->
         <form method='POST' action=''>{% csrf_token %}
 
@@ -351,5 +365,33 @@ document.getElementById('responce').innerHTML+='<br/><input type="text" id="'+bo
 
 </div>
 
+<!--START OF THE AUTOCOMPLETION SEARCH-->
+<script src=  
+"https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">  
+    </script>  
+    
+    <script src=  
+"https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">  
+    </script>  
+    
+    <link href=  
+"http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css"
+        rel="stylesheet" type="text/css" />  
 
+
+    <script>
+  
+  $( function() {
+    var availableTags = [
+    {% for product in physical_products %}
+            "{{product.description}}",
+        {% endfor %}
+    ];
+    $( "#tags" ).autocomplete({
+      source: availableTags
+    });
+  } );
+  </script>
+
+<!--END OF AUTOCOMPLETION SEARCH-->
 {% endblock %}

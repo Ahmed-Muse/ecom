@@ -93,7 +93,7 @@ class ShippingAddress(models.Model):
 ###############################################################################################################################
 #below is for the EMS 
 class PhysicalStockTable(models.Model):
-    part_number = models.CharField(max_length=255, blank=True, null=True,unique=True)# unique prevents data duplication
+    part_number = models.CharField('part number',max_length=255, blank=True, null=True,unique=True)# unique prevents data duplication
     description = models.CharField(max_length=255, blank=True, null=True)
     quantity = models.IntegerField(blank=False,null=True)
     price = models.IntegerField(blank=False, null=True)
@@ -114,6 +114,7 @@ class PhysicalStockTable(models.Model):
     width = models.CharField(max_length=50,blank=True,null=True)
     color = models.CharField(max_length=50,blank=True,null=True)
     expiry_date = models.CharField(max_length=50,blank=True,null=True)
+    
     vendor = models.CharField(max_length=50,blank=True,null=True)
 
 
@@ -143,7 +144,17 @@ class ForTey(models.Model):
     product_price = models.IntegerField(default=0,null=True,blank=True)
     def __str__(self):
            return self.product_name
-   
+
+
+
+    ###########################
+
+   #test
+class Language(models.Model):
+    name = models.CharField(max_length=20)
+  
+    def __str__(self):
+        return f"{self.name}"
    
    
 

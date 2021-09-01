@@ -22,71 +22,26 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout#for login and logout- and authentication
 
 #end of libraries for registration
-
+from .decorators import *
+from django.contrib.auth.models import Group
 #class view 
-class HomeView(ListView):
-    #model=PhysicalStockTable
-    template_name='class_view_test.html'
-
-# Create your views here.
-""" def systemadminlogin(request):
-    titile="Login page for the system admins "
-    if request.method=="POST":#if the user posts something, do below, else just show them sysadminlogin.html page
-        #if the user fills the forms and posts, then grab the username and password
-        username = request.POST['username']# "username" is from the html form
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)#this line does the authentication by comparing what was posted
-        #that was assigned to username and password above with what exists in the database.
-   
-        if user is not None:
-            login(request, user)
-            #return to login success page
-            return redirect("dashboard")
-        else:
-            messages.success(request,"There was an error, Try again")
-           # return redirect("errorpage")
-            return redirect('systemadminlogin')#this is the view function and not the template
-        
-   
-    else:
-        return render(request,"authenticate/sysadminlogin.html",{"title":titile})
-def systemadminlogout(request):
-    logout(request)#logs user out
-    messages.success(request,"Successfully logged out ")
-    return redirect('website')
-    
-    return render(request,"authenticate/sysadminlogin.html",{})
-
-def registeration(request):
-    userdetailsform=AddUserDetailsForm(request.POST or None)
-    systemadmins=UserDetailsModel.objects.all()
-    form_class=UserCreationForm()
-    if form_class.is_valid():
-        form_class.save()
-    
-    context={
-        "userdetailsform":userdetailsform,
-        "form_class":form_class,
-        "systemadmins":systemadmins,
-       
-    }
-    
-    return render(request,"authenticate/register.html",context)
- """
 
 #start of register and and login pages from Dennis 
+
 def registerpage(request):
-    if request.user.is_authenticated:
-        return redirect('dashboard')
-    else:
-        register_form=CreateUserForm()
-        if request.method=='POST':
-            register_form=CreateUserForm(request.POST)
-            if register_form.is_valid():
-                register_form.save()
-                user=register_form.cleaned_data.get('username')#get the username from the form
-                messages.success(request,'Account was created for '+ user)
-                return redirect('loginpage')
+    
+    register_form=CreateUserForm()
+    if request.method=='POST':
+        register_form=CreateUserForm(request.POST)
+        if register_form.is_valid():
+            #register_form.save()
+            user=register_form.save()
+            #user=register_form.cleaned_data.get('username')#get the username from the form
+            username=register_form.cleaned_data.get('username')#get the username from the form
+            messages.success(request,'Account was created for '+ username)
+            group=Group.objects.get(name='customer')#create user as customer category by default
+            user.groups.add(group)
+            return redirect('loginpage')
     
    
     
@@ -97,51 +52,29 @@ def registerpage(request):
     }
     
     return render(request,"authenticate/registerpage.html",context)
+@unaunthenticated_user
 def loginpage(request):
-    if request.user.is_authenticated:
-        return redirect('dashboard')
-    else:
-        if request.method=='POST':
-            username=request.POST.get('username')
-            password=request.POST.get('password')
-            user=authenticate(request,username=username,password=password)
-            if user is not None:#if there is an authenticated user
-                login(request, user)
-                return redirect('dashboard')
-            else:
-                messages.info(request,'Dear '+username + ', Your username or password is incorrect ! ')
+    
+    if request.method=='POST':
+        username=request.POST.get('username')
+        password=request.POST.get('password')
+        user=authenticate(request,username=username,password=password)
+        if user is not None:#if there is an authenticated user
+            login(request, user)
+            return redirect('dashboard')
+        else:
+            messages.info(request,'Dear '+username + ', Your username or password is incorrect ! ')
     
   
     
-        context={
+    context={
         
         }
     
-        return render(request,"authenticate/loginpage.html",context)
+    return render(request,"authenticate/loginpage.html",context)
 
 def logoutpage(request):
     logout(request)#logs user out
     messages.success(request,"Successfully logged out ")
     return redirect('loginpage')
 
-
-
-def userpage(request):
-    return render(request,"authenticate/userpage.html")
-    
-
-
-#end of register and login pages from Dennis
-
-#below is another way of doing the view ---class based model
-""" class UserRegisterView(generic.CreateView):
-    form_class=UserCreationForm
-    template_name='authenticate/register.html'
-    success_url=reverse_lazy('sysadminlogin')
- """
-
-
-
-def errorpage(request):
-    return render(request,"errorpage.html")
-    
