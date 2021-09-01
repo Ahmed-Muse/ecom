@@ -1,28 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
+
     <title>AutoComplete</title>
-    <script src=  
-"https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">  
-    </script>  
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>  
     
-    <script src=  
-"https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">  
-    </script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>  
     
-    <link href=  
-"http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css"
-        rel="stylesheet" type="text/css" />  
-</head>
-<body>
-    <h1>Welcome to GFG</h1>
-    <input type="text" id="tags">
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css"rel="stylesheet" type="text/css"/>  
+
+    <input type="text" id="tags" placeholder="Autocomplete search">
 
     <script>
-  
   $( function() {
     var availableTags = [
-    {% for products in product%}
+    {% for products in product %}
             "{{products.description}}",
         {% endfor %}
     ];
@@ -32,9 +22,10 @@
   } );
   </script>
 
-{% for products in product%}
+{% for products in product %}
 {{products.description}}
 
 {% endfor %}
-</body>
-</html>
+
+
+

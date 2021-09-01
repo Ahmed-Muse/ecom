@@ -1,4 +1,4 @@
-{% extends "ems/base_dashboard.html"%}
+{% extends "ems/stock_base.html"%}
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
@@ -365,26 +365,19 @@ document.getElementById('responce').innerHTML+='<br/><input type="text" id="'+bo
 
 </div>
 
-<!--START OF THE AUTOCOMPLETION SEARCH-->
-<script src=  
-"https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">  
-    </script>  
-    
-    <script src=  
-"https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">  
-    </script>  
-    
-    <link href=  
-"http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css"
-        rel="stylesheet" type="text/css" />  
 
-
+<!--START OF THE AUTOCOMPLETE SEARCH-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>  
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>  
+    
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css"rel="stylesheet" type="text/css"/>  
+   
     <script>
-  
   $( function() {
     var availableTags = [
-    {% for product in physical_products %}
-            "{{product.description}}",
+    {% for products in physical_products %} 
+            "{{products.description}}",
         {% endfor %}
     ];
     $( "#tags" ).autocomplete({
@@ -393,5 +386,12 @@ document.getElementById('responce').innerHTML+='<br/><input type="text" id="'+bo
   } );
   </script>
 
-<!--END OF AUTOCOMPLETION SEARCH-->
+{% for products in product %}
+{{products.description}}
+
+{% endfor %}
+
+<!-- END OF THE AUTOCOMPLETE SEARCH-->
+
+
 {% endblock %}

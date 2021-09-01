@@ -168,7 +168,8 @@ def stock(request):
     header="Inventory Management System"
     form =AddPhysicalProductForm(request.POST or None)
     form_about_phys_items=AboutPhysicalItemsForm(request.POST or None)
-    physical_products=PhysicalStockTable.objects.all().order_by('description')
+    #physical_products=PhysicalStockTable.objects.all().order_by('description')
+    physical_products=PhysicalStockTable.objects.all()
     
     if form.is_valid():
         form.save()
