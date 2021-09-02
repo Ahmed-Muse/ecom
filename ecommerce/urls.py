@@ -28,6 +28,10 @@ urlpatterns = [
     #since systemadmins is doing all the authentication, we need the two lines below
     path('systemadmins/', include('django.contrib.auth.urls')),#this ensures and allows that we use the already built in authentication system
     path('systemadmins/', include('systemadmins.urls')),#point to systemadmins
+    
+    #since systemadmins is doing all the authentication, we need the two lines below
+    path('invoicesys/', include('django.contrib.auth.urls')),#this ensures and allows that we use the already built in authentication system
+    path('invoicesys/', include('invoicesys.urls')),#point to systemadmins
 ]
 
 #urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)#error

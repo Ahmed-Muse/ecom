@@ -187,7 +187,7 @@ def stock(request):
     
     #start of the pagination setup
     #import pagination library up, then do code below, then pass it to the templates
-    pagination=Paginator(PhysicalStockTable.objects.all(),7)
+    pagination=Paginator(PhysicalStockTable.objects.all(),20)
     page=request.GET.get('page')#keep track of the pagination - each time you click, you need to know the page
     physical_products=pagination.get_page(page)#now this puts all together
     #next, pass this to the templates page (physical_products)

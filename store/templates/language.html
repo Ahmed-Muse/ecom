@@ -7,25 +7,27 @@
     
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css"rel="stylesheet" type="text/css"/>  
 
-    <input type="text" id="tags" placeholder="Autocomplete search">
+   
+    <input type="text" id="res" placeholder="Autocomplete search" value="+" onclick="addInput()"/><span id="tags"></span>
 
     <script>
-  $( function() {
-    var availableTags = [
+  
+
+  
+function addInput()
+{
+document.getElementById('tags').innerHTML+='<br/><input/><br/>';
+var availableTags = [
     {% for products in product %}
-            "{{products.description}}",
-        {% endfor %}
+        "{{products.description}}",
+        
+    {% endfor %}
     ];
-    $( "#tags" ).autocomplete({
+    $( "#res" ).autocomplete({
       source: availableTags
     });
-  } );
+     
+}
   </script>
-
-{% for products in product %}
-{{products.description}}
-
-{% endfor %}
-
 
 

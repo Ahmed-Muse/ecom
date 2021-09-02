@@ -37,25 +37,9 @@
             <a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'product_list_csv' %}">CSV</a>
             <a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'product_list_pdf' %}">PDF</a>
             <input type="text" id="tags" placeholder="Autocomplete search">
-
-            
+           
             </div>
             
-
-<!--start of dynamically adding field to form... on button click, create text field-->
-<input type="button" value="+" onclick="addInput()"/>
-<span id="responce"></span>
-<script>
-var countBox =1;
-var boxName = 0;
-function addInput()
-{
-     var boxName="On button click, create text field"+countBox; 
-document.getElementById('responce').innerHTML+='<br/><input type="text" id="'+boxName+'" value="'+boxName+'" "  /><br/>';
-     countBox += 1;
-}
-</script>
-<!--end of... on button click, create text field-->
           
     <!--start importtant libraries for the modal  -->
     <meta charset="utf-8">
@@ -73,11 +57,6 @@ document.getElementById('responce').innerHTML+='<br/><input type="text" id="'+bo
     crossorigin="anonymous"></script>
     <!--end importtant libraries for the modal  -->
     
-
-    
-
-            
-                
           </div>
           <div class="col-md-8">
               <div class="card">
@@ -393,5 +372,45 @@ document.getElementById('responce').innerHTML+='<br/><input type="text" id="'+bo
 
 <!-- END OF THE AUTOCOMPLETE SEARCH-->
 
+<!--start of good dynamic fields-->
+<form method='POST' action='index.html'>{% csrf_token %}
+<div id="dynamicCheck">
+  <input type="button" value="Generate dynamic fields"  onclick="createNewElement();"/>
+</div>
+<table>
+  <th>Description</th>
+  <th>Quantity</th>
+  <th>Price</th>
+  <tr>
+  <td><div id="newElementId"></div></td>
+  <td>
+  <div id="newElementId1"></div></td>
+  <td>
+  <div id="newElementId2"></div>
+  </td>
+  </tr>
+</table>
+<input type="submit" value='Save' class="btn btn-success">
 
+<script type="text/JavaScript">
+  function createNewElement() {
+      // First create a DIV element.
+      var txtNewInputBox = document.createElement('div');
+      var txtNewInputBox1 = document.createElement('div');
+      var txtNewInputBox2 = document.createElement('div');
+  
+      // Then add the content (a new input box) of the element.
+      
+      txtNewInputBox.innerHTML = "<input placeholder='Product Name' type='text' id='newInputBox'>";
+      txtNewInputBox1.innerHTML = "<input placeholder='Quantity' type='text' id='newInputBox'>";
+      txtNewInputBox2.innerHTML = "<input placeholder='Price' type='text' id='newInputBox'>";
+  
+  
+      // Finally put it where it is supposed to appear.
+      document.getElementById("newElementId").appendChild(txtNewInputBox);
+      document.getElementById("newElementId1").appendChild(txtNewInputBox1);
+      document.getElementById("newElementId2").appendChild(txtNewInputBox2);
+  }
+  </script>
+<!--end of dynamic field-->
 {% endblock %}

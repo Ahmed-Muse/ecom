@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'store.apps.StoreConfig',
     'crispy_forms',
     'systemadmins',
+    'invoicesys',
     
 ]
 
