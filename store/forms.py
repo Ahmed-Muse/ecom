@@ -79,4 +79,31 @@ class AddProductForTestingOnlyForm(forms.ModelForm): #the forms here is the one 
 
 
 
+class ContactForm(forms.Form):
+    
+    name=forms.CharField(max_length=10)
+    email=forms.EmailField(label='E-mail')
+    #category=forms.ChoiceField(choices=[('question','Question'),('other','Other')])
+    subject=forms.CharField(max_length=20,required=False)
+    body=forms.CharField(widget=forms.Textarea, max_length=100)
 
+
+
+
+
+
+############################33 dynamic forms#########################
+
+
+
+
+
+
+
+
+
+
+
+
+
+#################3 test

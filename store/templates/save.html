@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dynamic forms two</title>
+    </head>
+    <body>
+        <h2>Dynamic forms </h2>
+
+        <form method="POST" action=''>{% csrf_token %}
+            {{form}}
+            <br><br>
+           
+<br>
+            <button style="width: 100px; height:50px; color:green;" type="submit" value="Submit" class="btn btn-success" >Submit</button>
+
+        </form>
+        {% for items in queryset %}
+        {{items.first_name}}
+       
+        {{items.interest_0}}\
+        {{items.interest_1}}
+        {{items.interest_2}}
+
+        {% endfor %}
+       
+    </body>
+</html>
+
+

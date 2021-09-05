@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dynamic forms two</title>
+    </head>
+    <body>
+        <h2>Dynamic forms </h2>
+
+        <form method="POST" action=''>{% csrf_token %}
+            {{form}}
+<br>
+            <button style="width: 100px; height:50px; color:green;" type="submit" value="Submit" class="btn btn-success" >Submit</button>
+
+        </form>
+       
+    </body>
+</html>
+
+

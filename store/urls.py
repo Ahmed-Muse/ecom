@@ -36,11 +36,15 @@ urlpatterns = [
 	path('product_list_text_file/', views.product_list_text_file, name="product_list_text_file"),
 	path('product_list_csv/', views.product_list_csv, name="product_list_csv"),
 	path('product_list_pdf/', views.product_list_pdf, name="product_list_pdf"),
+	path('test2/', views.test2, name="test2"),
 
 	#below is for test only
 	path('language/', views.language, name="language"),
+	path('form/', views.contactformview, name="contactformview"),
+	path('dynamicform/', views.dynamicform, name="dynamicform"),
+	path('dynamicformtwo/', views.dynamicformtwo, name="dynamicformtwo"),
+	path('save/', views.save, name="save"),
 	
 	
 	
-
 ]

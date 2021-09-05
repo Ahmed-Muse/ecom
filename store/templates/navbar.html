@@ -29,6 +29,17 @@
         <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a></li><!--This are the view values-->
         {% endif %}
         <li class="nav-item"><a class="nav-link" href="{% url 'test' %}">Test</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'test2' %}">Test2</a></li>
+
+        <li class="nav-item"><a class="nav-link" href="{% url 'contactformview' %}">Form</a></li>
+
+        <li class="nav-item"><a class="nav-link" href="{% url 'dynamicform' %}">Dynamic form</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'invoicesys' %}">invoicesys</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'dynamicformtwo' %}">Dynamicformtwo</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'save' %}">save</a></li>
+
+
+        
         
         {% if user.is_authenticated %}
                 
@@ -48,7 +59,7 @@
             {% endif %}
         
           </ul>
-          <li class="nav-item"><a class="nav-link" href="{% url 'invoicesys' %}">invoicesys</a></li>
+         
     
 
 <!--start of modal content for the version-->

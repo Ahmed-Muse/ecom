@@ -196,6 +196,19 @@ def stock(request):
     page_num="a"*physical_products.paginator.num_pages
 
     #end of the pagination setup
+
+    #start of dynamic form data input
+    if request.method=="POST":
+        description=request.POST['description']
+        quantity=request.POST['quantity']
+        price=request.POST['price']
+
+        tablecontent=JsTest(description=description,quantity=quantity,price=price)
+        tablecontent.save()
+        return HttpResponse("data saved")
+        #return render(request,'test.html')
+
+    #end of dynamic form data input
         
 
     context = {
@@ -518,23 +531,195 @@ def shipping_address_online(request):
 
 ####################### below is for testing only
 def test(request):
-    title="Testing Page"
-    form=AddPhysicalProductForm(request.POST or None)
-    products = PhysicalStockTable.objects.all()
+    title="Testing Page for js html form"
     
-   
+    products = JsTest.objects.all()
+    if request.method=="POST":
+        description=request.POST['description']
+        quantity=request.POST['quantity']
+        price=request.POST['price']
+
+        tablecontent=JsTest(description=description,quantity=quantity,price=price)
+        tablecontent.save()
+        return HttpResponse("data saved")
+        #return render(request,'test.html')
     context={
-        "title": title,
-        "form":form,
+        "products":products,
+    }
+    
+    return render(request,'test.html', context)
+
+def test2(request):
+    title="Testing Page for js html form"
+   
+    products = JsTest.objects.all()
+    vari=[]
+    if request.method=="POST":
+        description=request.POST['description']
+        for content in description:
+            you=vari.append('content')
+            #product_lines.append(f'{product.description}  {product.quantity} {product.price}\n')
+
+
+        #quantity=request.POST['quantity']
+        #price=request.POST['price']
+
+        tablecontent=JsTest(description=description)
+        tablecontent.save()
+        return redirect("test2")
+        #return render(request,'test.html')
+    context={
         "products":products,
         
-
-       
         
-        }
-    return render(request,'test.html',context)
+    }
+    
+    return render(request,'test2.html', context)
+    
+def contactformview(request):
+    formmodelitems = FormModel.objects.all()
+    form=ContactForm(request.POST or None)
+    if request.method=="POST":
+        form=ContactForm(request.POST or None)
+        subject=request.POST['subject']
+        name=request.POST['name']
+        email=request.POST['email']
+        body=request.POST['body']
+        
+
+        tablecontent=FormModel(subject=subject,name=name,email=email,body=body)
+        tablecontent.save()
+        return redirect("contactformview")
+        #return HttpResponse("/form.html")
+        if form.is_valid():
+            subject=form.cleaned_data['subject']
+            name=form.cleaned_data['name']
+            email=form.cleaned_data['email']
+            body=form.cleaned_data['body']
+            #category=form.cleaned_data['category']
+
+            print(name, email,)
+            
+
+
+    context={"form":form,
+    "formmodelitems":formmodelitems,
+    }
+
+    return render(request,'form.html',context)
+
+def dynamicform(request):
+    form= ModelAndFormTogetherForm(request.POST or None)
+    content= ModelAndFormTogether.objects.all()
+    if form.is_valid():
+        form.save()
+       
+        return redirect('dynamicform')
+    context={
+        "form":form,
+        "content":content,
+
+    }
+    return render(request,'dynamicform.html',context)
+
+def dynamicformtwo(request):
+    form=ProfileForm(request.POST or None)
+    content= Profile.objects.all()
+    if form.is_valid():
+        form.save()
+       
+        return redirect('dynamicformtwo')
+    context={
+        "form":form,
+        "content":content,
+
+    }
+    return render(request,'dynamicformtwo.html',context)
+
+
+
+
+
+
 
 def language(request):
     languages = Language.objects.all()
     physical_products=PhysicalStockTable.objects.all()
     return render(request,'language.html',{"languages":languages,"product":physical_products})
+
+
+
+
+def JSHtmlTestFunc(request):
+    title="test for html js"
+    products = JSHtmlTest.objects.all()
+    context={
+       "products":products,
+       "title":title,
+   }
+    return render(request,'language.html',context)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#################################################################################################################################
+
+def save(request):
+    form=ProfileForm(request.POST or None)
+    queryset = Profile.objects.all()
+    if request.method=="POST":
+        #form=ProfileForm(request.POST or None)
+        first_name=request.POST['first_name']
+        last_name=request.POST['last_name']
+       # interest_0=request.POST['interest_0']
+        #interest_1=request.POST['interest_1']
+        interest_2=request.POST['interest_2'] 
+        tablecontent=Profile(first_name=first_name,last_name=last_name,interest_2=interest_2)
+         
+        
+
+        #tablecontent=Profile(first_name=first_name,last_name=last_name,interest_0=interest_0,interest_1=interest_1,interest_2=interest_2)
+        tablecontent.save()
+    context={
+        "form":form,
+        "queryset":queryset,
+        
+
+    }
+    return render(request,'save.html',context)
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

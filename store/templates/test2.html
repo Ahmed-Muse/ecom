@@ -9,11 +9,7 @@
       
       <tr>
       <td><div id="newElementId">Description</div></td>
-      <td>
-      <div id="newElementId1">Quantity</div></td>
-      <td>
-      <div id="newElementId2">Price</div>
-      </td>
+      
       </tr>
     </table>
     <input type="submit" value='Save' class="btn btn-success">
@@ -25,37 +21,32 @@
       function createNewElement() {
           // First create a DIV element.
           var txtNewInputBox = document.createElement('div');
-          var txtNewInputBox1 = document.createElement('div');
-          var txtNewInputBox2 = document.createElement('div');
+         // var txtNewInputBox1 = document.createElement('div');
+         // var txtNewInputBox2 = document.createElement('div');
       
           // Then add the content (a new input box) of the element.
           
           txtNewInputBox.innerHTML = "<input placeholder='Product Name' name='description' type='text' id='newInputBox'>";
-          txtNewInputBox1.innerHTML = "<input placeholder='Quantity' type='number' name='quantity' id='newInputBox'>";
-          txtNewInputBox2.innerHTML = "<input placeholder='Price' name='price' type='number' id='newInputBox'>";
+          //txtNewInputBox1.innerHTML = "<input placeholder='Quantity' type='number' name='quantity' id='newInputBox'>";
+         // txtNewInputBox2.innerHTML = "<input placeholder='Price' name='price' type='number' id='newInputBox'>";
       
       
           // Finally put it where it is supposed to appear.
           document.getElementById("newElementId").appendChild(txtNewInputBox);
-          document.getElementById("newElementId1").appendChild(txtNewInputBox1);
-          document.getElementById("newElementId2").appendChild(txtNewInputBox2);
+         // document.getElementById("newElementId1").appendChild(txtNewInputBox1);
+         // document.getElementById("newElementId2").appendChild(txtNewInputBox2);
       }
       </script>
     <!--end of dynamic field-->
 <div class="col-lg-6">
     <table>
         <th>Description</th>
-        <th>Quantity</th>
-        <th>Price</th>
+       
         {% for items in products %}
   
         <tr>
         <td> {{items.description}}</td>
-        <td>
-            {{items.quantity}}</td>
-        <td>
-            {{items.price}}
-        </td>
+        
         </tr>
         
    {% endfor %}
@@ -64,3 +55,5 @@
    
    
    </div></div>
+
+{{form.fname}}

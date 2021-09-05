@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django import forms
+from django.forms import fields#just for testing only
 
 # Create your models here.
 
@@ -155,7 +157,139 @@ class Language(models.Model):
   
     def __str__(self):
         return f"{self.name}"
+
+
+   #test
+class JSHtmlTest(models.Model):
+    
+    description = models.CharField(max_length=20)
+    quantity=models.IntegerField(default=0)
+    price=models.IntegerField(default=0)
+
+  
+    def __str__(self):
+        return f"{self.description}"
+
+class JsTest(models.Model):
+    
+    description = models.CharField(max_length=20)
+    quantity=models.IntegerField(default=0)
+    price=models.IntegerField(default=0)
+
+  
+    def __str__(self):
+        return f"{self.description}"
+
+class FormModel(models.Model):
+    name=models.CharField(max_length=10)
+    email=models.EmailField()
+    
+    subject=models.CharField(max_length=20)
+    body=models.CharField(max_length=100)
+
+
+
+#####################3 dynamic forms#############################3
+
+
+
+class ModelAndFormTogether(models.Model):
+    first_name = models.CharField(max_length=20)
+    last_name = models.CharField(max_length=20)
+    interest_0 = models.CharField(max_length=20,null=True)
+    interest_1 = models.CharField(max_length=20,null=True)
+    interest_2 = models.CharField(max_length=20,null=True)
+
+class  ModelAndFormTogetherForm(forms.ModelForm):
+    class Meta:
+        model =  ModelAndFormTogether
+        fields = ["first_name",'last_name','interest_0','interest_1','interest_2']
+
+
+    """ first_name = forms.CharField(required=True)
+    last_name = forms.CharField(required=True)
+    interest = forms.CharField(required=True) """
+    
+""" class ProfileInterest(models.Model):
+    profile = models.ForeignKey(Profile,on_delete=models.SET_NULL,null=True)
+    interest = models.CharField(max_length=250)
+     """
+
+
+######################### dynamic forms two ##################3333
+
+class Profile(models.Model):
+    #in the reference, this is forms.CharField()
+    first_name = models.CharField(max_length=20)
+    last_name = models.CharField(max_length=20)
+    interest_0 = models.CharField(max_length=20,null=True,blank=True)
+    interest_1 = models.CharField(max_length=20,null=True,blank=True)
+    interest_2 = models.CharField(max_length=20,null=True,blank=True)
+
+class ProfileInterest(models.Model):
+    profile = models.ForeignKey(Profile,on_delete=models.SET_NULL,null=True)
+    interest = models.CharField(max_length=20,null=True)
+
+class ProfileForm(forms.Form):
+    first_name = forms.CharField(required=True,max_length=20)
+    last_name = forms.CharField(required=True,max_length=20)
+    
+    interest_0 = forms.CharField(required=True,max_length=20)
+    interest_1 = forms.CharField(required=True,max_length=20)
+    interest_2 = forms.CharField(required=True,max_length=20)
    
-   
+    for i in range(3):
+        field_name = 'interest_%s' % (i,)
+        
+        for names in field_name:
+            field_name=forms.CharField(required=False)
+            names = forms.CharField(required=True,max_length=20)
+        #'interest_%s' % (i,)=forms.CharField(required=True,max_length=20)
+    
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        interests = ProfileInterest.objects.filter(
+            #profile=self.instance
+        )
+        for i in range(len(interests) + 1):
+            field_name = 'interest_%s' % (i,)
+            self.fields[field_name] = forms.CharField(required=False)
+            try:
+                self.initial[field_name] = interests[i].interest
+            except IndexError:
+                self.initial[field_name] = ''
+        # create an extra blank field
+        field_name = 'interest_%s' % (i + 1,)
+        self.fields[field_name] = forms.CharField(required=False)
+
+        def clean(self):
+            interests = set()
+            i = 0
+            field_name = 'interest_%s' % (i,)
+            while self.cleaned_data.get(field_name):
+                interest = self.cleaned_data[field_name]
+            if interest in interests:
+                self.add_error(field_name, 'Duplicate')
+            else:
+               interests.add(interest)
+            i += 1
+            field_name = 'interest_%s' % (i,)
+            self.cleaned_data['interests'] = interests
+
+        def save(self):
+            profile = self.instance
+            profile.first_name = self.cleaned_data['first_name']
+            profile.last_name = self.cleaned_data['last_name']
+
+            profile.interest_set.all().delete()
+            for interest in self.cleaned_data['interests']:
+                ProfileInterest.objects.create(
+                profile=profile,
+                interest=interest,
+                )
 
     
+            
+            
+  
