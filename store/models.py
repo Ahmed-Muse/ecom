@@ -124,6 +124,16 @@ class PhysicalStockTable(models.Model):
     
     def __str__(self):
     		return self.part_number + ' ' + self.description # this will show up in the admin area
+
+#in the object below am trying to store the issue goods in their own model
+class IssuedPhysicalStockTable(models.Model):
+    description = models.CharField(max_length=255, blank=True, null=True)
+    issued_quantity = models.IntegerField(default='0',blank=True,null=True)
+    issued_to = models.CharField(max_length=50,blank=True,null=True)
+    received_quantity = models.IntegerField(default='0',blank=True,null=True)
+    def __str__(self):
+    	return self.part_number + ' ' + self.issued_quantity
+
   
 
 ################################################################################################################################

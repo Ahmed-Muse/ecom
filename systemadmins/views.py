@@ -18,7 +18,7 @@ from django.urls import reverse_lazy
 
 
 #start of libraries for registration
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth import authenticate, login, logout#for login and logout- and authentication
 
 #end of libraries for registration
@@ -30,6 +30,10 @@ from django.contrib.auth.models import Group
 
 def registerpage(request):
     
+    """ form=UserCreationForm(request.POST or None)
+    if form.is_valid():
+        user_obj=form.save()
+        return redirect('/login') """
     register_form=CreateUserForm()
     if request.method=='POST':
         register_form=CreateUserForm(request.POST)
@@ -56,6 +60,12 @@ def registerpage(request):
 def loginpage(request):
     
     if request.method=='POST':
+        """ form=AuthenticationForm(request,data=request.POST)
+        if form.is_valid():
+            user=form.get_user()
+            login(request,user)
+            return redirect("dashboard") """
+
         username=request.POST.get('username')
         password=request.POST.get('password')
         user=authenticate(request,username=username,password=password)
@@ -64,6 +74,7 @@ def loginpage(request):
             return redirect('dashboard')
         else:
             messages.info(request,'Dear '+username + ', Your username or password is incorrect ! ')
+            form=AuthenticationForm(request)
     
   
     
@@ -77,4 +88,5 @@ def logoutpage(request):
     logout(request)#logs user out
     messages.success(request,"Successfully logged out ")
     return redirect('loginpage')
+
 

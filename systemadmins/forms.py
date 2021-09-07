@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm#this django form fields tha django creates automatically for us
+from django.contrib.auth.forms import UserCreationForm,AuthenticationForm#this django form fields tha django creates automatically for us
 from django.contrib.auth.models import User
 from django.forms import fields#this is the model table for the users which django creates automatically for us
 from .models import *

@@ -42,14 +42,23 @@ class AddPhysicalProductForm(forms.ModelForm): #the forms here is the one import
         model = PhysicalStockTable
         fields = ["part_number",'description','quantity','price','comments','weight','length',
         'width','color',"expiry_date",'reorder_level',"vendor"]
+    #def clean(self):
+        #data=self.cleaned_data
+        #part_number=data.get("part_number")
+        #queryset=PhysicalStockTable.objects.filter(part_number_icontains=part_number)
+        #queryset=PhysicalStockTable.objects.filter(part_number_icontains="CONTAINS BAD WORDS")
+        #if queryset.exists():
+            #self.add_error("part_number", f"{part_number} already exists! ") """
+        #return part_number
+
 class IssuePhysicalItemsForm(forms.ModelForm):
     	class Meta:
             model = PhysicalStockTable
-            fields = ['issued_quantity', 'issued_to']
+            fields = ['description','issued_quantity', 'issued_to']
 class ReceivePhysicalItemsForm(forms.ModelForm):
     	class Meta:
             model = PhysicalStockTable
-            fields = ['received_quantity']
+            fields = ['description','received_quantity']
 class PhysicalItemsReorderLevelForm(forms.ModelForm):
     	class Meta:
             model = PhysicalStockTable
@@ -81,11 +90,17 @@ class AddProductForTestingOnlyForm(forms.ModelForm): #the forms here is the one 
 
 class ContactForm(forms.Form):
     
-    name=forms.CharField(max_length=10)
+    name=forms.CharField(max_length=100)
     email=forms.EmailField(label='E-mail')
     #category=forms.ChoiceField(choices=[('question','Question'),('other','Other')])
     subject=forms.CharField(max_length=20,required=False)
     body=forms.CharField(widget=forms.Textarea, max_length=100)
+    def cleaned_contact_form_data(self):
+        cleaned_data=self.cleaned_data
+        name=cleaned_data.get("name")
+        if name.lower().strip()=="AhmedMuseDiriye":
+            raise forms.ValidationError("This name is taken")
+        return name
 
 
 

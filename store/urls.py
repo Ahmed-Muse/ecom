@@ -44,7 +44,12 @@ urlpatterns = [
 	path('dynamicform/', views.dynamicform, name="dynamicform"),
 	path('dynamicformtwo/', views.dynamicformtwo, name="dynamicformtwo"),
 	path('save/', views.save, name="save"),
-	
+
+	path('issued_stock_history/', views.issue_physical_stock_history, name="issue_physical_stock_history"),
+
+
+
+	#path('product_full_details/<int:id>/', views.product_full_details, name="product_full_details"),
 	
 	
 ]

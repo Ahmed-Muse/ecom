@@ -198,14 +198,14 @@ def stock(request):
     #end of the pagination setup
 
     #start of dynamic form data input
-    if request.method=="POST":
+    """  if request.method=="POST":
         description=request.POST['description']
         quantity=request.POST['quantity']
         price=request.POST['price']
 
         tablecontent=JsTest(description=description,quantity=quantity,price=price)
         tablecontent.save()
-        return HttpResponse("data saved")
+        return HttpResponse("data saved") """
         #return render(request,'test.html')
 
     #end of dynamic form data input
@@ -346,6 +346,14 @@ def issue_physical_items(request, pk):
         instance = form.save(commit=False)
         instance.received_quantity=0
         instance.quantity -= instance.issued_quantity
+
+        # 7th August 2021...start of my own code trying to store the issued items in their own database called IssuedPhysicalStockTable
+        query_table_content =PhysicalStockTable.objects.get(id=pk)
+        form = IssuePhysicalItemsForm(request.POST or None, instance=query_table_content)
+        issued=IssuedPhysicalStockTable(description=instance.description,issued_quantity=instance.issued_quantity, issued_to=instance.issued_to)
+        issued.save()
+        #end of the above 7th August 2021
+
         #instance.line_total=instance.price*instance.quantity_in_store
         #instance.quantity=instance.quantity - instance.issue_quantity
 
@@ -363,6 +371,14 @@ def issue_physical_items(request, pk):
 		#"username": 'Issue By: ' + str(request.user),
 	}
     return render(request, "ems/stock/issue_or_receive_physical_items.html", context)
+def issue_physical_stock_history(request):
+    issued_stock_history_table_content=IssuedPhysicalStockTable.objects.all()
+
+    context={"issued_stock_history_table_content":issued_stock_history_table_content,
+
+    }
+    return render(request,"ems/stock/issued_stock_history.html",context)
+
 def receive_physical_items(request, pk):
     query_table_content = PhysicalStockTable.objects.get(id=pk)
     form = ReceivePhysicalItemsForm(request.POST or None, instance=query_table_content)
@@ -372,6 +388,13 @@ def receive_physical_items(request, pk):
         instance.quantity +=instance.received_quantity
         instance.receive_by=str(request.user)
         instance.save()
+
+        # 7th August 2021...start of my own code trying to store the issued items in their own database called IssuedPhysicalStockTable
+        query_table_content =PhysicalStockTable.objects.get(id=pk)
+        form = ReceivePhysicalItemsForm(request.POST or None, instance=query_table_content)
+        issued=IssuedPhysicalStockTable(description=instance.description,received_quantity=instance.received_quantity)
+        issued.save()
+        #end of the above 7th August 2021
     
        # return redirect('/stock_details/'+str(instance.id))
         return redirect('/stock/')
@@ -581,10 +604,13 @@ def contactformview(request):
     form=ContactForm(request.POST or None)
     if request.method=="POST":
         form=ContactForm(request.POST or None)
-        subject=request.POST['subject']
-        name=request.POST['name']
-        email=request.POST['email']
-        body=request.POST['body']
+       
+        if form.is_valid():
+            subject=form.cleaned_data.get("subject")#use this or the one belwo
+            subject=request.POST['subject']
+            name=request.POST['name']
+            email=request.POST['email']
+            body=request.POST['body']
         
 
         tablecontent=FormModel(subject=subject,name=name,email=email,body=body)
@@ -678,7 +704,7 @@ def JSHtmlTestFunc(request):
 
 #################################################################################################################################
 
-def save(request):
+def save(request,*args, **kwargs):
     form=ProfileForm(request.POST or None)
     queryset = Profile.objects.all()
     if request.method=="POST":
