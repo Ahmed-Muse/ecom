@@ -8,6 +8,7 @@ from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages#for flash messages
 from django.http import HttpResponse# this is necessary for generating text files
+from django.forms.models import ModelForm, modelformset_factory #modelform for query sets
 
 from django.core.paginator import Paginator#this is important for the pagination
 # Create your views here.
@@ -684,6 +685,26 @@ def JSHtmlTestFunc(request):
        "title":title,
    }
     return render(request,'language.html',context)
+
+def dynamicformpartworking(request):
+    NamesFormSet=modelformset_factory(NamesTable,form=NamesTableForm,extra=0)
+    
+    formset=NamesFormSet(request.POST or None)
+    #if request.method=='POST':
+        #formset=NamesFormSet(request.POST or None)
+
+    if formset.is_valid():
+        formset.save(commit=True)
+
+
+    context={
+        "formset":formset,
+
+    }
+   
+    
+
+    return render(request,'ems/stock/dynamicformpartworking.html',context)
 
 
 

@@ -46,6 +46,7 @@ urlpatterns = [
 	path('save/', views.save, name="save"),
 
 	path('issued_stock_history/', views.issue_physical_stock_history, name="issue_physical_stock_history"),
+	path('dynamicformpartworking/', views.dynamicformpartworking, name="dynamicformpartworking"),
 
 
 

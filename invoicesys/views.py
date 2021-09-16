@@ -18,3 +18,6 @@ def add_invoicesys(request):
         "invoice_product":invoice_product
     }
     return render(request,'invoicesys.html',context)
+def testjs(request):
+    context={}
+    return render(request,'testjs.html',context)

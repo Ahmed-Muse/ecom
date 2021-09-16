@@ -75,6 +75,10 @@ class SearchPhysicalItemsForm(forms.ModelForm):
             fields = ['part_number','description']
 
 
+class  NamesTableForm(forms.ModelForm):
+    class Meta:
+        model=NamesTable
+        fields=['fname','lname']
 
 
 ############################################################################################################################

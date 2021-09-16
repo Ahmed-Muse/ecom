@@ -110,17 +110,24 @@
         </div>
         
             <div class="col-lg-6">
-        {% for items in invoice_product %}
-        {{items.line_one}}<br>
-        
-        {% endfor %}
+       
             </div></div>
 
             <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
             <script src="{% static 'js/jquery-ui-1.12.1/jquery-ui.js' %}"></script>
-            <script src="{% static 'js/myjs.js' %}"></script>
+           
             <!--end of jquery lib-->
             
-    </bod>
 
+
+            
+            <button type="button" onclick="myFunction()">Click Me!</button>
+            
+            <p id="demo1"></p>
+            <p id="demo2"></p>
+            <script src="{% static 'js/testjs1.js' %}"></script>
+
+            
+    </bod>
+    <script src="{% static 'js/myjs.js' %}"></script>
 </html>

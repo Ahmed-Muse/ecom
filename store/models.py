@@ -134,7 +134,10 @@ class IssuedPhysicalStockTable(models.Model):
     def __str__(self):
     	return self.part_number + ' ' + self.issued_quantity
 
-  
+class NamesTable(models.Model):
+
+    fname=models.CharField(max_length=220)
+    lname=models.CharField(max_length=220)
 
 ################################################################################################################################
 
