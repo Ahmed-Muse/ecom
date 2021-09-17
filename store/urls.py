@@ -47,7 +47,7 @@ urlpatterns = [
 
 	path('issued_stock_history/', views.issue_physical_stock_history, name="issue_physical_stock_history"),
 	path('dynamicformpartworking/', views.dynamicformpartworking, name="dynamicformpartworking"),
-
+	path('dynamicformthree/', views.dynamicformthree, name="dynamicformthree"),
 
 
 	#path('product_full_details/<int:id>/', views.product_full_details, name="product_full_details"),

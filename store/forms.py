@@ -1,5 +1,6 @@
 from django import forms
 from .models import *
+from django.forms import (formset_factory, modelformset_factory)
 
 #
 class AddOnlineStockForm(forms.ModelForm): #the forms here is the one imported up there.
@@ -111,7 +112,43 @@ class ContactForm(forms.Form):
 
 
 
-############################33 dynamic forms#########################
+############################33 dynamic form3   #########################
+class  DynamicFormThreeForm(forms.Form):
+    product_name = forms.CharField(
+        label='Product Name',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter product Name here'
+        })
+    )
+    quantity = forms.CharField(
+        label='Product Quantity',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter product quantity here'
+        })
+    )
+
+
+    
+BookFormset = formset_factory(DynamicFormThreeForm)
+BookModelFormset = modelformset_factory(
+    DynamicFormThreeTable,
+    fields=('product_name','quantity',),
+    extra=1,
+    widgets={
+        'product_name': forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter Book Name here'
+            }
+        ),
+        'quantity': forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter quantity here'
+            }
+        )
+    }
+)
 
 
 

@@ -305,4 +305,16 @@ class ProfileForm(forms.Form):
     
             
             
+  #############################3 dynamic form 3#####################
+
+class DynamicFormThreeTable(models.Model):
+    
+    product_name = models.CharField(max_length=200)
+    quantity=models.IntegerField(default=0)
+    #price=models.IntegerField(default=0)
+    class Meta:
+        db_table = 'dynamicformthreetable'
+
   
+    def __str__(self):
+        return f"{self.product_name}"

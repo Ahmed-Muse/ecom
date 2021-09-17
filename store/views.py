@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import * #you can do dot because models and views are in the same directory as dot means from this directory
 from django.http import JsonResponse
 import json
+from django.views import generic #imported for dynamic form 3
 import datetime
 from .utils import *
 from .forms import *
@@ -705,6 +706,34 @@ def dynamicformpartworking(request):
     
 
     return render(request,'ems/stock/dynamicformpartworking.html',context)
+
+def dynamicformthree(request):
+    template_name = 'dynamicformthree.html'
+    heading_message = 'Formset Demo'
+    if request.method == 'GET':
+        formset = BookFormset(request.GET or None)
+    elif request.method == 'POST':
+        formset = BookFormset(request.POST)
+        if formset.is_valid():
+            for form in formset:
+                product_name = form.cleaned_data.get('product_name')
+                quantity = form.cleaned_data.get('quantity')
+                #price = form.cleaned_data.get('price')
+                
+                # save book instance
+                if product_name and quantity:
+                    DynamicFormThreeTable(product_name=product_name,quantity=quantity).save()
+            return redirect('dynamicformthree')
+
+    return render(request, template_name, {
+        'formset': formset,
+        'heading': heading_message,
+    })
+
+    context={
+
+    }
+    return render(request,'dynamicformthree.html',context)
 
 
 
