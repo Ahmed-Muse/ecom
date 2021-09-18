@@ -128,6 +128,9 @@ def processOrder(request):
 def main(request):
     return render(request, 'store/main.html')
 
+#################################################3 END OF THE ONLINE ECOMMERCE PART########################################
+
+
 def website(request):
     
     context = {
@@ -157,12 +160,38 @@ def base_dashboard(request):
     return render(request,'base_dashboard.html',context)
 #@allowed_users(allowed_roles=['admin'])
 def hrm(request):
-    
-    context = {
-        
-    }
+    staff=HRMTable.objects.all()
+    template_name = 'ems/hrm/hrm.html'
+    heading_message = 'Formset Demo'
+    HRMFormset = formset_factory( HRMForm)
+    if request.method == 'GET':
+        formset = HRMFormset(request.GET or None)
+    elif request.method == 'POST':
+        formset = HRMFormset(request.POST)
+        if formset.is_valid():
+            for form in formset:
+                staff_no = form.cleaned_data.get('staff_no')
+                first_name = form.cleaned_data.get('first_name')
+                last_name = form.cleaned_data.get('last_name')
+                department = form.cleaned_data.get('department')
+                title = form.cleaned_data.get('title')
+                comment = form.cleaned_data.get('comment')
+                #price = form.cleaned_data.get('price')
+                
+                # save book instance
+                if all([staff_no, first_name,last_name,department,title,comment]):
+                    HRMTable(staff_no=staff_no,first_name=first_name,last_name=last_name,
+                    department=department,title=title,comment=comment).save()
+            return redirect('hrm')
 
-    return render(request,'ems/hrm/hrm.html',context)
+    return render(request, template_name, {
+        'formset': formset,
+        'heading': heading_message,
+        "staff":staff,
+    })
+
+   
+
 @allowed_users(allowed_roles=['admin'])
 #@admin_only
 def stock(request):
@@ -464,6 +493,33 @@ def search_physical_items(request):
     }
     return render(request,"ems/stock/search_physical_items.html",context)
 
+def quotation(request):
+    template_name = 'ems/stock/quotation.html'
+    heading_message = 'Make A Quotation'
+
+
+    QuotationFormset = formset_factory(QuotationForm)
+    if request.method == 'GET':
+        formset = QuotationFormset(request.GET or None)
+    elif request.method == 'POST':
+        formset = QuotationFormset(request.POST)
+        if formset.is_valid():
+            for form in formset:
+                description = form.cleaned_data.get('description')
+                quantity = form.cleaned_data.get('quantity')
+                unit_price = form.cleaned_data.get('unit_price')
+                total_price = form.cleaned_data.get('total_price')
+                #price = form.cleaned_data.get('price')
+                
+                # save book instance
+                if all([description, quantity,unit_price,total_price]):
+                    QuotationTable(description=description,quantity=quantity,unit_price=unit_price,total_price=total_price).save()
+            return redirect('quotation')
+
+    return render(request, template_name, {
+        'formset': formset,
+        'heading': heading_message,
+    })
 
 
 ################# start .............online parts#########################################
@@ -710,6 +766,7 @@ def dynamicformpartworking(request):
 def dynamicformthree(request):
     template_name = 'dynamicformthree.html'
     heading_message = 'Formset Demo'
+    BookFormset = formset_factory(DynamicFormThreeForm)
     if request.method == 'GET':
         formset = BookFormset(request.GET or None)
     elif request.method == 'POST':
@@ -721,7 +778,7 @@ def dynamicformthree(request):
                 #price = form.cleaned_data.get('price')
                 
                 # save book instance
-                if product_name and quantity:
+                if all([product_name, quantity]):
                     DynamicFormThreeTable(product_name=product_name,quantity=quantity).save()
             return redirect('dynamicformthree')
 
@@ -787,8 +844,28 @@ def save(request,*args, **kwargs):
 
 
 
+def savetwodifferentforms(request):
+    template_name = 'savetwodifferentforms.html'
+    form1=TwoDifferentFormsForm1(request.POST or None)
+    form2=TwoDifferentFormsForm2(request.POST or None)
+   
+    if request.method == 'POST':
+        form1=TwoDifferentFormsForm1(request.POST or None)
+        form2=TwoDifferentFormsForm2(request.POST or None)
+      
+        first_name = request.POST['first_name']
+        last_name=request.POST['last_name']
+        
+        if first_name and last_name:
+            TwoDifferentFormsTable(first_name=first_name,last_name=last_name).save()
+            return redirect('savetwodifferentforms')
+        
 
-
+    return render(request, template_name, {
+        
+        "form1":form1,
+        "form2":form2,
+    })
 
 
 

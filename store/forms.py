@@ -74,6 +74,127 @@ class SearchPhysicalItemsForm(forms.ModelForm):
     	class Meta:
             model = PhysicalStockTable
             fields = ['part_number','description']
+class  QuotationForm(forms.Form):
+    description = forms.CharField(
+        label='Description',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Product description'
+        })
+    )
+    quantity = forms.CharField(
+        label='Product Quantity',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter product quantity here'
+        })
+    )
+    unit_price = forms.CharField(
+        label='Unit price',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Unit price'
+        })
+    )
+    total_price = forms.CharField(
+        label='Total price',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Total price'
+        })
+    )
+class  CustomerDetailsForm(forms.Form):
+    customer = forms.CharField(
+        label='customer',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Customer details'
+        })
+    )
+
+
+
+
+######### test form
+class  TwoDifferentFormsForm1(forms.Form):
+    first_name = forms.CharField(
+        label='first name',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'first name'
+        })
+    )
+class  TwoDifferentFormsForm2(forms.Form):
+    last_name = forms.CharField(
+        label='last name',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'last name'
+        })
+    )
+    
+
+
+
+########## start of dynamic form for HRM ################3
+class  HRMForm(forms.Form):
+    staff_no = forms.CharField(
+        label='staff_no',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Staff number'
+        })
+    )
+    first_name = forms.CharField(
+        label='First Name',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'First Name'
+        })
+    )
+    last_name = forms.CharField(
+        label='Last Name',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Last Name'
+        })
+    )
+    department = forms.CharField(
+        label='Department',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Department'
+        })
+    )
+    title = forms.CharField(
+        label='Title',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Title'
+        })
+    )
+    comment = forms.CharField(
+        label='Comment',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Comment'
+        })
+    )
+
+
+
+
+####### end of dynamic form for the HRM######################
+
+
+
+
+
+
+
+
+
+
 
 
 class  NamesTableForm(forms.ModelForm):
@@ -131,24 +252,7 @@ class  DynamicFormThreeForm(forms.Form):
 
 
     
-BookFormset = formset_factory(DynamicFormThreeForm)
-BookModelFormset = modelformset_factory(
-    DynamicFormThreeTable,
-    fields=('product_name','quantity',),
-    extra=1,
-    widgets={
-        'product_name': forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Enter Book Name here'
-            }
-        ),
-        'quantity': forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Enter quantity here'
-            }
-        )
-    }
-)
+
 
 
 

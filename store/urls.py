@@ -36,6 +36,7 @@ urlpatterns = [
 	path('product_list_text_file/', views.product_list_text_file, name="product_list_text_file"),
 	path('product_list_csv/', views.product_list_csv, name="product_list_csv"),
 	path('product_list_pdf/', views.product_list_pdf, name="product_list_pdf"),
+	path('quotation/', views.quotation, name="quotation"),
 	path('test2/', views.test2, name="test2"),
 
 	#below is for test only
@@ -48,6 +49,7 @@ urlpatterns = [
 	path('issued_stock_history/', views.issue_physical_stock_history, name="issue_physical_stock_history"),
 	path('dynamicformpartworking/', views.dynamicformpartworking, name="dynamicformpartworking"),
 	path('dynamicformthree/', views.dynamicformthree, name="dynamicformthree"),
+	path('savetwodifferentforms/', views.savetwodifferentforms, name="savetwodifferentforms"),
 
 
 	#path('product_full_details/<int:id>/', views.product_full_details, name="product_full_details"),

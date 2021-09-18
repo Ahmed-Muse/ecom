@@ -1,0 +1,22 @@
+<h1>Saving two different forms at the same time </h1>
+       
+              <!--start of the form section-->     
+              <form class="form-horizontal" method="POST" action="">
+                {% csrf_token %}
+              
+            
+                                 
+                                  <div class="form-field">
+                                    {{form1}}
+                                  </div>
+                                  <br><br>
+                                  <div class="form-field">
+                                    {{form2}}
+                                  </div>
+                                  
+                          
+                          <button id="form-button" class="btn btn-success btn-block" type="submit">Add</button>
+                      </form>
+                    
+                        <!--end of content of left column-->
+          

@@ -133,6 +133,48 @@ class IssuedPhysicalStockTable(models.Model):
     received_quantity = models.IntegerField(default='0',blank=True,null=True)
     def __str__(self):
     	return self.part_number + ' ' + self.issued_quantity
+class QuotationTable(models.Model):
+    customer = models.CharField(max_length=255, blank=True, null=True)
+    description = models.CharField(max_length=255, blank=True, null=True)
+    quantity = models.IntegerField(blank=False,null=True)
+    unit_price = models.IntegerField(blank=False, null=True)
+    total_price = models.IntegerField(blank=False, null=True)
+   
+    
+    def __str__(self):
+    	return str(self.description)
+
+class HRMTable(models.Model):
+    staff_no = models.IntegerField(default='0',blank=True,null=True)
+    first_name = models.CharField(max_length=50,blank=True,null=True)
+    last_name = models.CharField(max_length=50,blank=True,null=True)
+    department = models.CharField(max_length=50,blank=True,null=True)
+    title = models.CharField(max_length=50,blank=True,null=True)
+    comment = models.CharField(max_length=250,blank=True,null=True)
+    date_joined =  models.DateTimeField(auto_now_add=True,blank=True,null=True)
+
+    def __str__(self):
+    	return self.first_name
+
+class TwoDifferentFormsTable(models.Model):
+    first_name = models.CharField(max_length=50,blank=True,null=True)
+    last_name = models.CharField(max_length=50,blank=True,null=True)
+    def __str__(self):
+    	return self.first_name
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class NamesTable(models.Model):
 

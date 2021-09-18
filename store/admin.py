@@ -11,5 +11,6 @@ admin.site.register(ForTestingOnly)
 admin.site.register(Language)
 admin.site.register(JsTest)
 admin.site.register(DynamicFormThreeTable)
+admin.site.register(QuotationTable)
 
 

@@ -41,33 +41,40 @@
                             </marquee>
                         </div>
                     </div>
-                    <!--start content of left column-->
-                    <form id="form">
-                      
+                   
+
+                   
+              <!--start of the form section-->     
+            <form class="form-horizontal" method="POST" action="">
+            {% csrf_token %}
+          {{ formset.management_form }}
+          {% for form in formset %}
+         
                       <div id="shipping-info">
                           <hr>
                               <div class="form-field">
-                                  <input class="form-control" type="text" name="part_number" placeholder="Product part number">
+                                {{form.staff_no}}
                               </div>
                               <div class="form-field">
-                                  <input class="form-control" type="text" name="description" placeholder="Product description">
+                                {{form.first_name}}
                               </div>
                               <div class="form-field">
-                                  <input class="form-control" type="number" name="quantity" placeholder="Quantity">
+                                {{form.last_name}}
                               </div>
                               <div class="form-field">
-                                  <input class="form-control" type="number" name="price" placeholder="Price">
+                                {{form.department}}
                               </div>
                               <div class="form-field">
-                                  <input class="form-control" type="text" name="comment" placeholder="Comments">
+                                {{form.title}}
                               </div>
-                          
+                              <div class="form-field">
+                                {{form.comment}}
+                              </div>
                       </div>
-                      <hr>
                       
-                      <input id="form-button" class="btn btn-success btn-block" type="submit" value="Add">
+                      <button id="form-button" class="btn btn-success btn-block" type="submit">Add</button>
                   </form>
-      
+                  {% endfor %}
                     <!--end of content of left column-->
       
       
@@ -92,27 +99,20 @@
                                   </tr>
                                 </thead>
                                 <tbody>
+                                  {% for employee in staff %}
                                   <tr>
-                                    <th scope="row">1</th>
-                                    <td>001</td>
-                                    <td>Rayxaan</td>
-                                    <td>Axmed</td>
-                                    <td>CEO</td>
-                                    <td>None</td>
+                                    <th scope="row">{{employee.staff_no}}</th>
+                                    <td>{{employee.first_name}}</td>
+                                    <td>{{employee.last_name}}</td>
+                                    <td>{{employee.department}}</td>
+                                    <td>{{employee.title}}</td>
+                                    <td>{{employee.comment}}</td>
                                   </tr>
-                                  <tr>
-                                    <th scope="row">1</th>
-                                    <td>002</td>
-                                    <td>Maxammed</td>
-                                    <td>Axmed</td>
-                                    <td>Director</td>
-                                    <td>Group director</td>
-                                  </tr>
-                                
+                                  
+                                {% endfor %}
                                 </tbody>
                               </table>
-                                
-                                
+                              
                             </div>
                         </div>
                     </div>
@@ -125,7 +125,9 @@
 	<div id="documents" class="tabcontent">
 	     
     <h4>CONTENT HERE FOR FIRST TAB 2</h4>
-
+    {% for employee in staff %}
+    {{employee.first_name}}
+    {% endfor %}
     </div>
             
 	
