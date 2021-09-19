@@ -12,5 +12,6 @@ admin.site.register(Language)
 admin.site.register(JsTest)
 admin.site.register(DynamicFormThreeTable)
 admin.site.register(QuotationTable)
+admin.site.register(QuotationCustomerTable)
 
 

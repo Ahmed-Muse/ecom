@@ -50,7 +50,8 @@ urlpatterns = [
 	path('dynamicformpartworking/', views.dynamicformpartworking, name="dynamicformpartworking"),
 	path('dynamicformthree/', views.dynamicformthree, name="dynamicformthree"),
 	path('savetwodifferentforms/', views.savetwodifferentforms, name="savetwodifferentforms"),
-
+	path('quotationcustomerdetails/', views.quotationcustomerdetails, name="quotationcustomerdetails"),
+	
 
 	#path('product_full_details/<int:id>/', views.product_full_details, name="product_full_details"),
 	

@@ -5,6 +5,7 @@
 <h3>{{heading}}</h3>
 {% endif %}
 <form class="form-horizontal" method="POST" action="">
+    {{form2}}
     {% csrf_token %}
 {{ formset.management_form }}
 {% for form in formset %}

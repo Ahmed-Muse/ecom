@@ -496,6 +496,7 @@ def search_physical_items(request):
 def quotation(request):
     template_name = 'ems/stock/quotation.html'
     heading_message = 'Make A Quotation'
+    form2=QuotationCustomerForm2(request.POST or None)
 
 
     QuotationFormset = formset_factory(QuotationForm)
@@ -519,6 +520,7 @@ def quotation(request):
     return render(request, template_name, {
         'formset': formset,
         'heading': heading_message,
+        "form2":form2,
     })
 
 
@@ -860,16 +862,76 @@ def savetwodifferentforms(request):
             TwoDifferentFormsTable(first_name=first_name,last_name=last_name).save()
             return redirect('savetwodifferentforms')
         
-
+#######################3ok ##################################
     return render(request, template_name, {
         
         "form1":form1,
         "form2":form2,
     })
 
+def quotationcustomerdetails(request):################## this is doing addition to database.... ateleast for now.
+    template_name = 'quotationcustomerdetails.html'
+   ####################  so far so good ################
+   #######################
+   ############ if theings get messy, stop here###################
+   #############3 it is saving both manay inputs and one inputs
+   #################### ok #######################3
+    tablecontent=QuotationCustomerTable.objects.all()
+    QuotationFormset = formset_factory(QuotationCustomerForm1)
+    #form2 = formset_factory(QuotationCustomerForm2)
+    form2=QuotationCustomerForm2(request.POST or None)
+
+    if request.method == 'GET':
+        formset = QuotationFormset(request.GET or None)
+    elif request.method == 'POST':
+        formset = QuotationFormset(request.POST)
+        form2=QuotationCustomerForm2(request.POST or None)
+        if formset.is_valid():
+            for form in formset:
+                description = form.cleaned_data.get('description')
+                quantity = form.cleaned_data.get('quantity')
+                unit_price = form.cleaned_data.get('unit_price')
+                total_price = form.cleaned_data.get('total_price')
+                #price = form.cleaned_data.get('price')
+                
+                # save book instance
+                if all([description, quantity,unit_price,total_price]):
+                    QuotationCustomerTable(description=description,quantity=quantity,unit_price=unit_price,total_price=total_price).save()
+        
+                    
+            return redirect('quotationcustomerdetails')
+
+    return render(request, template_name, {
+        'formset': formset,
+        "tablecontent":tablecontent,
+        "form2":form2,
+        
+        
+    })
 
 
 
+
+    form1=QuotationCustomerForm1(request.POST or None)
+    form2=QuotationCustomerForm2(request.POST or None)
+   
+    if request.method == 'POST':
+        form1=TwoDifferentFormsForm1(request.POST or None)
+        form2=TwoDifferentFormsForm2(request.POST or None)
+      
+        first_name = request.POST['first_name']
+        last_name=request.POST['last_name']
+        
+        if first_name and last_name:
+            TwoDifferentFormsTable(first_name=first_name,last_name=last_name).save()
+            return redirect('quotationcustomerdetails')
+        
+
+    return render(request, template_name, {
+        
+        "form1":form1,
+        "form2":form2,
+    })
 
 
 

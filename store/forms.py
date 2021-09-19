@@ -132,9 +132,53 @@ class  TwoDifferentFormsForm2(forms.Form):
             'placeholder': 'last name'
         })
     )
-    
 
 
+
+
+
+
+########################################################################################
+
+class  QuotationCustomerForm1(forms.Form):
+    description = forms.CharField(
+        label='Description',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Product description'
+        })
+    )
+    quantity = forms.CharField(
+        label='Product Quantity',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter product quantity here'
+        })
+    )
+    unit_price = forms.CharField(
+        label='Unit price',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Unit price'
+        })
+    )
+    total_price = forms.CharField(
+        label='Total price',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Total price'
+        })
+    )
+class  QuotationCustomerForm2(forms.Form):
+    customer = forms.CharField(
+        label='customer',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'customer'
+        })
+    )
+
+##############################################################################################################
 
 ########## start of dynamic form for HRM ################3
 class  HRMForm(forms.Form):

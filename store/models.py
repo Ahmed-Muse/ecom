@@ -162,6 +162,18 @@ class TwoDifferentFormsTable(models.Model):
     def __str__(self):
     	return self.first_name
 
+class QuotationCustomerTable(models.Model):
+    customer = models.CharField(max_length=255, blank=True, null=True)
+    description = models.CharField(max_length=255, blank=True, null=True)
+    quantity = models.IntegerField(blank=False,null=True)
+    unit_price = models.IntegerField(blank=False, null=True)
+    total_price = models.IntegerField(blank=False, null=True)
+   
+    
+    def __str__(self):
+    	return str(self.description)
+
+
 
 
 
