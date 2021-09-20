@@ -496,6 +496,40 @@ def search_physical_items(request):
 def quotation(request):
     template_name = 'ems/stock/quotation.html'
     heading_message = 'Make A Quotation'
+
+    form2=QuotationCustomerForm2(request.POST or None)
+    QuotationFormset = formset_factory(QuotationForm)
+    if request.method == 'GET':
+        form2=QuotationCustomerForm2(request.POST or None)
+        formset = QuotationFormset(request.GET or None)
+    elif request.method == 'POST':
+        form2=QuotationCustomerForm2(request.POST or None)
+        formset = QuotationFormset(request.POST or None)
+        
+       
+        if form2.is_valid() and formset.is_valid():
+            #first save the customer name
+            customer=form2.cleaned_data.get('customer')
+            if customer:
+                QuotationTable(customer=customer).save()
+            for form in formset:
+                description = form.cleaned_data.get('description')
+                quantity = form.cleaned_data.get('quantity')
+                unit_price = form.cleaned_data.get('unit_price')
+                total_price = form.cleaned_data.get('total_price')
+                #price = form.cleaned_data.get('price')
+                
+                # save book instance
+                if all([description, quantity,unit_price,total_price]):
+                    QuotationTable(description=description,quantity=quantity,unit_price=unit_price,total_price=total_price).save()
+        
+                    
+            return redirect('quotation')
+
+
+
+    """ 
+
     form2=QuotationCustomerForm2(request.POST or None)
 
 
@@ -515,7 +549,7 @@ def quotation(request):
                 # save book instance
                 if all([description, quantity,unit_price,total_price]):
                     QuotationTable(description=description,quantity=quantity,unit_price=unit_price,total_price=total_price).save()
-            return redirect('quotation')
+            return redirect('quotation') """
 
     return render(request, template_name, {
         'formset': formset,
@@ -886,22 +920,25 @@ def savetwodifferentforms(request):
 
 def quotationcustomerdetails(request):################## this is doing addition to database.... ateleast for now.
     template_name = 'quotationcustomerdetails.html'
-   ####################  so far so good ################
-   #######################
-   ############ if theings get messy, stop here###################
-   #############3 it is saving both manay inputs and one inputs
-   #################### ok #######################3
+   
     tablecontent=QuotationCustomerTable.objects.all()
+    form2=QuotationCustomerForm2(request.POST or None)
     QuotationFormset = formset_factory(QuotationCustomerForm1)
     #form2 = formset_factory(QuotationCustomerForm2)
-    form2=QuotationCustomerForm2(request.POST or None)
+    
 
     if request.method == 'GET':
+        form2=QuotationCustomerForm2(request.POST or None)
         formset = QuotationFormset(request.GET or None)
     elif request.method == 'POST':
-        formset = QuotationFormset(request.POST)
         form2=QuotationCustomerForm2(request.POST or None)
-        if formset.is_valid():
+        formset = QuotationFormset(request.POST or None)
+       
+        if form2.is_valid() and formset.is_valid():
+            #first save the customer name
+            customer=form2.cleaned_data.get('customer')
+            if customer:
+                QuotationCustomerTable(customer=customer).save()
             for form in formset:
                 description = form.cleaned_data.get('description')
                 quantity = form.cleaned_data.get('quantity')
