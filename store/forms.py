@@ -74,6 +74,12 @@ class SearchPhysicalItemsForm(forms.ModelForm):
     	class Meta:
             model = PhysicalStockTable
             fields = ['part_number','description']
+
+class SellingPriceCalcForm(forms.ModelForm):
+    	class Meta:
+            model = SellingPriceCalcModel
+            fields = ['product_name','product_cost','markup','comments']
+
 class  QuotationForm(forms.Form):
     description = forms.CharField(
         label='Description',
@@ -248,13 +254,6 @@ class  NamesTableForm(forms.ModelForm):
 
 
 ############################################################################################################################
-
-
-##################3 below is for testing only############
-class AddProductForTestingOnlyForm(forms.ModelForm): #the forms here is the one imported up there.
-    class Meta:
-        model = ForTestingOnly
-        fields = ["product_name",'product_quantity','product_price']
 
 
 

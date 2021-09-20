@@ -523,6 +523,21 @@ def quotation(request):
         "form2":form2,
     })
 
+def selling_price_calc(request):
+    testablecontent=SellingPriceCalcModel.objects.all()
+    form=SellingPriceCalcForm(request.POST or None)
+    if request.method == 'POST':
+        form=SellingPriceCalcForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+    context={
+        "form":form,
+        "testablecontent":testablecontent,
+        
+
+    }
+    return render(request, 'ems/stock/selling_price_calc.html', context)
+
 
 ################# start .............online parts#########################################
 def stock_online(request):
@@ -932,9 +947,6 @@ def quotationcustomerdetails(request):################## this is doing addition 
         "form1":form1,
         "form2":form2,
     })
-
-
-
 
 
 

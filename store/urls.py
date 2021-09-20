@@ -52,6 +52,9 @@ urlpatterns = [
 	path('savetwodifferentforms/', views.savetwodifferentforms, name="savetwodifferentforms"),
 	path('quotationcustomerdetails/', views.quotationcustomerdetails, name="quotationcustomerdetails"),
 	
+	path('selling_price_calc/', views.selling_price_calc, name="selling_price_calc"),
+	
+
 
 	#path('product_full_details/<int:id>/', views.product_full_details, name="product_full_details"),
 	
