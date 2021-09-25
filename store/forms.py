@@ -176,11 +176,18 @@ class  QuotationCustomerForm1(forms.Form):
         })
     )
 class  QuotationCustomerForm2(forms.Form):
-    customer = forms.CharField(
-        label='customer',
+    customer_name = forms.CharField(
+        label='Customer name',
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'customer'
+            'placeholder': 'Customer name'
+        })
+    )
+    customer_mobile = forms.CharField(
+        label='Customer Mobile',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Customer mobile'
         })
     )
 

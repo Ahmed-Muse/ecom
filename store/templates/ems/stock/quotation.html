@@ -36,7 +36,15 @@
     </div>
 </div>
 </form>
-
+{% for quotes in quotations %}
+{{quotes.customer_name}}
+{{quotes.customer_mobile}}
+{{quotes.description}}
+{{quotes.quantity}}
+{{quotes.unit_price}}
+{{quotes.total_price}}
+<br>
+{% endfor %}
 {% endblock %}
 
 {% block custom_js %}
@@ -104,3 +112,6 @@ $(document).on('click', '.remove-form-row', function(e){
 
 </script>
 {% endblock %}
+
+
+

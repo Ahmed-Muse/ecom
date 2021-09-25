@@ -496,6 +496,7 @@ def search_physical_items(request):
 def quotation(request):
     template_name = 'ems/stock/quotation.html'
     heading_message = 'Make A Quotation'
+    quotations=QuotationTable.objects.all()
 
     form2=QuotationCustomerForm2(request.POST or None)
     QuotationFormset = formset_factory(QuotationForm)
@@ -509,9 +510,10 @@ def quotation(request):
        
         if form2.is_valid() and formset.is_valid():
             #first save the customer name
-            customer=form2.cleaned_data.get('customer')
-            if customer:
-                QuotationTable(customer=customer).save()
+            customer_name=form2.cleaned_data.get('customer_name')
+            customer_mobile=form2.cleaned_data.get('customer_mobile')
+            if customer_name and customer_mobile:
+                QuotationTable(customer_name=customer_name,customer_mobile=customer_mobile).save()
             for form in formset:
                 description = form.cleaned_data.get('description')
                 quantity = form.cleaned_data.get('quantity')
@@ -555,6 +557,7 @@ def quotation(request):
         'formset': formset,
         'heading': heading_message,
         "form2":form2,
+        "quotations":quotations,
     })
 
 def selling_price_calc(request):

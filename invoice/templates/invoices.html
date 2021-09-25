@@ -1,0 +1,187 @@
+
+{% extends "ems/base_dashboard.html"%}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+   <!-- start of important for this tabs popup-->
+    <!-- Google fonts - Poppins -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<style>
+		
+.pointer {cursor: pointer;}
+                    
+.wp-block {
+  margin: 0 0 15px 0;
+  padding:15px;
+  -webkit-transition: all .3s linear;
+  transition: all .3s linear;
+  position: relative;
+  cursor: default;
+  border-radius: 2px;
+}
+</style>
+  						
+<a  class="active pointer" onclick="openPage('user_details')"><i style="color: black;padding:18px 14px 4px 70px;" class="material-icons md-24" id="defaultOpen">assignment</i><span style='line-height:2'>Invoices</span></a>
+<a class="pointer" onclick="openPage('documents')"><i style="color: black;padding:18px 14px 4px 70px;" class="material-icons md-24">commute</i>More details</a>
+<a class="pointer" onclick="openPage('vehicleoperator')"><i style="color: black;padding:18px 14px 4px 70px;" class="material-icons md-24">how_to_reg</i>Bio Brief</a>
+							
+
+	<div id="user_details" class="tabcontent" >
+								
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header bg-info text-white">
+                            Information
+                        </div>
+                        <div class="card-body">
+                            <marquee behavior="" direction="left">
+                                <h3 class="my-4"> {{title}}</h3> </h3>
+                            </marquee>
+                        </div>
+                    </div>
+                   <br>
+                   
+                   <a href="{% url 'create-nvoice' %}"><button type="button" class="btn btn-primary">Add New Invoice</button></a>
+                 
+                   
+              <!--start of the form section-->     
+            <form class="form-horizontal" method="POST" action="">
+            {% csrf_token %}
+          {{ formset.management_form }}
+          {% for form in formset %}
+         
+                      <div id="shipping-info">
+                          <hr>
+                              <div class="form-field">
+                                {{form.staff_no}}
+                              </div>
+                              <div class="form-field">
+                                {{form.first_name}}
+                              </div>
+                              <div class="form-field">
+                                {{form.last_name}}
+                              </div>
+                              <div class="form-field">
+                                {{form.department}}
+                              </div>
+                              <div class="form-field">
+                                {{form.title}}
+                              </div>
+                              <div class="form-field">
+                                {{form.comment}}
+                              </div>
+                      </div>
+                      
+                      <button id="form-button" class="btn btn-success btn-block" type="submit">Add</button>
+                  </form>
+                  {% endfor %}
+                    <!--end of content of left column-->
+      
+      
+                </div>
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header bg-info text-white">
+                            {{header}}header
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                               <!--main content-->
+                               <table class="table table-hover">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">Ref</th>
+                                    <th scope="col">Customer</th>
+                                    <th scope="col">Contact</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Due</th>
+                                    <th scope="col">Comments</th>
+                                   
+                                    <th scope="col">Delete</th>
+                                    <th scope="col">View</th>
+                                    
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {% for invoice in invoices %}
+                                  <tr>
+                                    <th scope="row">{{invoice.invoiceNumber}}</th>
+                                    <td>{{invoice.client.clientName}}</td>
+                                    
+                                    <td>{{invoice.client.phoneNumber}}</td>
+                                    <td>{{invoice.status}}</td>
+                                    <td>{{invoice.invoiceDueDate}}</td>
+                                    <td>{{invoice.comments}}</td>
+                                    <td>
+                                    <a href="{% url 'delete-invoice' invoice.slug %}"><button class="btn btn-danger"> DELETE </button></a>
+                </td>
+            <td>
+          <a href="{% url 'create-build-invoice' invoice.slug %}"><button class="btn btn-primary"> VIEW </button></a>
+        </td>
+                                   
+                                    
+                                  </tr>
+                                  
+                                {% endfor %}
+                                </tbody>
+                              </table>
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                                
+	</div>
+						
+	<div id="documents" class="tabcontent">
+	     
+    <h4>CONTENT HERE FOR FIRST TAB 2</h4>
+    {% for employee in staff %}
+    {{employee.first_name}}
+    {% endfor %}
+    </div>
+            
+	
+	<div id="vehicleoperator" class="tabcontent">
+
+		<h4>CONTENT HERE FOR FIRST TAB 3</h4>
+
+    </div>
+
+    
+       
+    <!-- JavaScript files-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+   
+   
+<script>
+
+function openPage(pageName,elmnt,color) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+   tabcontent[i].style.display = "none";
+   
+  }
+  
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+  }
+  document.getElementById(pageName).style.display = "block";
+ // elmnt.style.backgroundColor = "#eae2e2";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+
+$(document).ready(function() {
+
+});
+</script>
+
+{% endblock %}

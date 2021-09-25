@@ -134,7 +134,8 @@ class IssuedPhysicalStockTable(models.Model):
     def __str__(self):
     	return self.part_number + ' ' + self.issued_quantity
 class QuotationTable(models.Model):
-    customer = models.CharField(max_length=255, blank=True, null=True)
+    customer_name = models.CharField(max_length=255, blank=True, null=True)
+    customer_mobile = models.CharField(max_length=255, blank=True, null=True)
     description = models.CharField(max_length=255, blank=True, null=True)
     quantity = models.IntegerField(blank=False,null=True)
     unit_price = models.IntegerField(blank=False, null=True)

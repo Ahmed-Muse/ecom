@@ -1,0 +1,84 @@
+{% extends "ems/base_dashboard.html"%}
+{% load static %}
+
+{% block content %}
+
+    <!--Topside-->
+    <div class="container">
+      <div class="row mt-4">
+          <div class="col-md-4">
+              <div class="card">
+                  <div class="card-header bg-info text-white">
+                      Information
+                  </div>
+                  <div class="card-body">
+                      <marquee behavior="" direction="left">
+                          <h3 class="my-4"> {{title}}</h3> </h3>
+                      </marquee>
+                  </div>
+              </div>
+              <!--start content of left column-->
+              <form id="form">
+                
+                <div id="shipping-info">
+                    <hr>
+                   {{form.as_p}}
+                 
+                    
+                </div>
+                <hr>
+                
+                <input id="form-button" class="btn btn-success btn-block" type="submit" value="Add">
+            </form>
+
+              <!--end of content of left column-->
+
+
+          </div>
+          <div class="col-md-8">
+              <div class="card">
+                  <div class="card-header bg-info text-white">
+                      {{header}}header
+                  </div>
+                  <div class="card-body">
+                      <div class="row">
+                         <!--main content-->
+                         <table class="table table-hover">
+                          <thead>clients
+                            <tr>
+                             
+                              <th scope="col">Name</th>
+                              <th scope="col">Address</th>
+                              <th scope="col">Country</th>
+                              <th scope="col">Code</th>
+                              <th scope="col">Address</th>
+                              <th scope="col">Contact</th>
+                              <th scope="col">E-mail</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for customer in clients %}
+                            <tr> 
+                             
+                              <td>{{customer.clientName}}</td>
+                              <td>{{customer.clientPhysicalAddress}}</td>
+                              <td>{{customer.country}}</td>
+                              <td>{{customer.postalCode}}</td>
+                              <td>{{customer.phoneNumber}}</td>
+                              <td>{{customer.emailAddress}}</td>
+                            </tr>
+                        {% endfor %}
+                          </tbody>
+                        </table>
+                          
+                          
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!--End Topside-->
+
+
+{% endblock %}
