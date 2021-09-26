@@ -45,39 +45,7 @@
                    
                    <a href="{% url 'create-nvoice' %}"><button type="button" class="btn btn-primary">Add New Invoice</button></a>
                  
-                   
-              <!--start of the form section-->     
-            <form class="form-horizontal" method="POST" action="">
-            {% csrf_token %}
-          {{ formset.management_form }}
-          {% for form in formset %}
-         
-                      <div id="shipping-info">
-                          <hr>
-                              <div class="form-field">
-                                {{form.staff_no}}
-                              </div>
-                              <div class="form-field">
-                                {{form.first_name}}
-                              </div>
-                              <div class="form-field">
-                                {{form.last_name}}
-                              </div>
-                              <div class="form-field">
-                                {{form.department}}
-                              </div>
-                              <div class="form-field">
-                                {{form.title}}
-                              </div>
-                              <div class="form-field">
-                                {{form.comment}}
-                              </div>
-                      </div>
-                      
-                      <button id="form-button" class="btn btn-success btn-block" type="submit">Add</button>
-                  </form>
-                  {% endfor %}
-                    <!--end of content of left column-->
+                
       
       
                 </div>
@@ -101,7 +69,7 @@
                                    
                                     <th scope="col">Delete</th>
                                     <th scope="col">View</th>
-                                    
+
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -119,6 +87,7 @@
                 </td>
             <td>
           <a href="{% url 'create-build-invoice' invoice.slug %}"><button class="btn btn-primary"> VIEW </button></a>
+          
         </td>
                                    
                                     
