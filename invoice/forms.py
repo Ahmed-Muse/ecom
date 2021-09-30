@@ -52,10 +52,7 @@ class InvoiceForm(forms.ModelForm):
     ('Current', 'Current'),
     ('Overdue', 'Overdue'),
     ]
-    invoiceNumber = forms.CharField(
-                    required = True,
-                    label='Enter any notes for the client',
-                    widget=forms.Textarea(attrs={'class': 'form-control mb-3'}))
+    
     paymentTerms = forms.ChoiceField(
                     choices = paymentTermsOptions,
                     required = True,
@@ -64,16 +61,16 @@ class InvoiceForm(forms.ModelForm):
     status = forms.ChoiceField(
                     choices = statusOptions,
                     required = True,
-                    label='Change Invoice Status',
+                    label='Invoice Status',
                     widget=forms.Select(attrs={'class': 'form-control mb-3'}),)
     comments = forms.CharField(
                     required = True,
-                    label='Enter any notes for the client',
+                    label='comments',
                     widget=forms.Textarea(attrs={'class': 'form-control mb-3'}))
 
     invoiceDueDate = forms.DateField(
                         required = True,
-                        label='Invoice Due',
+                        label='Invoice due date',
                         widget=DateInputForm(attrs={'class': 'form-control mb-3'}),)
 
 

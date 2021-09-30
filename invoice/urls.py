@@ -9,7 +9,7 @@ urlpatterns = [
 	path('products/', views.products, name="products"),
 	path('clients/', views.clients, name="clients"),
 
-	path('creat-invoice', views.createInvoice, name="create-nvoice"),# I have added invoices
+	path('creat-invoice', views.createInvoice, name="create-invoice"),# I have added invoices
 	path('create-build/<slug:slug>', views.createBuildInvoice, name="create-build-invoice"),
 	#path('invoices/create-build/<slug:slug>',views.createBuildInvoice, name='create-build-invoice'),
 

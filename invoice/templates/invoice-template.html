@@ -114,7 +114,7 @@
 						<table>
 
               <tr >
-      					<td><h1>Invoice: {{p_settings.clientName}}</h1></td>
+      					
       				</tr>
 
 							<tr>
@@ -122,13 +122,13 @@
 									<!--
 									<img src="https://host.tatiblockchain.co.za/img/skolo_logo.png" style="width: 100%; max-width: 100px" />
 									-->
-									<img class=img-fluid  src="{% static 'img/logo.png' %}" style="width: 150px; height: 70px;" alt="Allifmaal">
+									<img class=img-fluid  src="{% static 'img/logo.png' %}" style="width: 200px; height: 100px;" alt="Allifmaal">
 								</td>
 
 								<td>
-									Invoice #: {{invoice.number}}<br />
-									Created: {{invoice.date_created|date}}<br />
-									Due: {{invoice.dueDate}}
+									Invoice No: {{invoice.invoiceNumber}}<br />
+									Created: {{invoice.dateCreated|date}}<br />
+									Due: {{invoice.invoiceDueDate}}
 								</td>
 							</tr>
 						</table>
@@ -141,15 +141,15 @@
 							<tr>
 								<td>
 									{{p_settings.clientName}}<br />
-									{{p_settings.addressLine1}}<br />
-									{{p_settings.province}}, {{p_settings.postalCode}} <br/ >
+									{{p_settings.clientPhysicalAddress}}<br />
+									{{p_settings.country}}, {{p_settings.postalCode}} <br/ >
                   {{p_settings.emailAddress}} <br/ >
                   {{p_settings.phoneNumber}}
 								</td>
 
-								<td>
+								<td><p>Customer Details</p>
                   {{invoice.client.clientName}}<br />
-									{{invoice.client.addressLine1}}<br />
+									{{invoice.client.clientPhysicalAddress}}<br />
 									{{invoice.client.province}}, {{invoice.client.postalCode}}<br />
 									{{invoice.client.emailAddress}} <br/ >
                   {{invoice.client.phoneNumber}}
@@ -161,16 +161,19 @@
 
 
 				<tr class="heading">
-					<td>Item</td>
-          <td>Quantity</td>
-					<td>Price</td>
+				<td>S/N</td>
+				<td>Description</td>
+          		<td>Quantity</td>
+				<td>Price</td>
 				</tr>
 
         {% for product in products %}
 				<tr class="item">
-					<td>{{product.description}}</td>
-          <td>{{product.quantity}}</td>
-					<td>{{product.currency}} {{product.unitPrice}}</td>
+					<td style="background-color: lightblue;">{{forloop.counter}}</td>
+					
+					<td style="background-color: lightblue;">{{product.description}}</td>
+          <td style="background-color: lightblue;">{{product.quantity}}</td>
+					<td style="background-color: lightblue;">{{product.currency}} {{product.unitPrice}}</td>
 				</tr>
         {% endfor %}
 
@@ -186,7 +189,10 @@
         <tr>
           <td>
             <p>
-              {{invoice.notes}}
+              {{invoice.comments}}
+			  <br>
+			  {{invoice.status}}
+			 
             </p>
           </td>
         </tr>

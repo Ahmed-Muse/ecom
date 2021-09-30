@@ -1,0 +1,181 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <!--FontAwesome CDN-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+        integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+
+    <!--Chartjs CDN-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
+    <!--Custome CSS-->
+    <link rel="stylesheet" href="./style.css">
+    <link href="{% static 'css/style_inventory.css' %}" rel="stylesheet">
+    <title>{{title}}</title>
+
+
+
+
+ 
+</head>
+
+<body>
+
+    <!--this css file is for the calculator-->
+    <link href="{% static 'css/stylescalc2.css' %}" rel="stylesheet">
+
+    {% block modal %}
+                 
+    {% endblock modal %}
+
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-info bg-info">
+        <div class="container">
+            <a class="navbar-brand text-white" href="/">Website</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="{% url 'dashboard' %}">Dashboard <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="{% url 'quotation' %}">Quote <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="{% url 'invoice_dashboard' %}">Invoice <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="{% url 'store' %}">Online Shop <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+                   
+                    <!-- Trigger the modal with a button -->
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="#myModal" data-toggle="modal" data-target="#myModal">Calculator <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+                </ul>
+                 
+
+                
+                {% if user.is_authenticated %}
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="{% url 'logoutpage' %}">Logout <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+                   </ul>
+
+                {% else %}
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="{% url 'loginpage' %}">Login <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+            </ul>
+            {% endif %}
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link text-white" href="{% url 'registerpage' %}">Register <span
+                            class="sr-only">(current)</span></a>
+                </li>
+        </ul>
+            </div>
+        </div>
+    </nav>
+    <!--End Navbar-->
+
+    <!--Topside-->
+    
+    <div class="container">
+        <div class="row mt-4">
+            
+
+            <!--start of column 1-->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        {{header}}
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                           
+            <a href="{% url 'example' %}"><button type="button" class="btn btn-primary">Convert HTML page to pdf </button></a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end of column 1-->
+
+
+
+            <!--start of column 2-->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        {{header}}
+                    </div>
+                   <table>
+                            <th scope="col">Customer Name</th>
+                            <th>Description</th>
+                            <th>PDF</th>
+                            
+                                
+                                {% for customer in customers %}
+                                <tr>
+
+                               <td> {{customer.customer_name}}</td>
+                                <td>
+                                {{customer.description}}</td>
+                                <td>
+                                <a href="{% url 'customer-pdf-view' customer.pk %}"><button type="button" class="btn btn-primary">PDF</button></a>
+                                </td>
+                                    </tr>
+                                {% endfor %}<br>
+
+                                    
+                           </table>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end of column 2-->
+
+
+        </div>
+    </div>
+    
+    
+   
+
+
+</body>
+<script src="{% static 'js/scriptcalc2.js' %}"></script>
+</html>
+
+
+
+
+

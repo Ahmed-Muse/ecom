@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'systemadmins',
     'invoicesys',
     'invoice',
+    'htmlpagetopdfbydjango',
+   
     
 ]
 

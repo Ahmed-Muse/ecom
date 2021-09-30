@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+
+        </title>
+    </head>
+    <body>
+        <img class=img-fluid  src="{% static 'img/logo.png' %}" style="width: 200px; height: 100px;" alt="No image available ">
+        <h1 style="text-align: center;">Allifmaal system</h1>
+
+        <img src="static/logo.png" height="200px">
+        <img src="static/img/logo.png" height="200px">
+        <img src="static/logo1.jpg" height="200px">
+        <img src="logo.png" height="200px">
+
+
+        {% static 'logo.png' %}
+        <img src="{% static 'logo.png' %}" height="200px">
+
+
+
+        <style type="text/css">
+            .myTable { background-color:#eee;border-collapse:collapse; }
+            .myTable th { background-color:#000;color:white;width:50%; }
+            .myTable td, .myTable th { padding:5px;border:1px solid #000; }
+            </style>
+            <!-- End Styles -->
+            <table class="myTable">
+            <tr>
+            <th>Customer name </th><th>description</th><th>Logo</th>
+            </tr>
+            
+            <tr>
+            <td>{{customer.customer_name}}</td><td>{{customer.description}}</td><td> <img src="{{customer.logo.path}}" height="200px"></td>
+            <!--
+                <img src="media/{{customer.logo}}" height="200px"> ... this may work as well
+            -->
+            </tr>
+            </table>
+            
+
+    </body>
+</html>
+
+<!-- Start Styles. Move the 'style' tags and everything between them to between the 'head' tags -->

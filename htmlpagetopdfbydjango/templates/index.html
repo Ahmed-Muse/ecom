@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% for customer in obj_list %}
+{{customer.name}}<br>
+<a href=""><button>pdf </button></a>
+{% endfor %}
+
+<a href="#"><button class="btn btn-success">pdf </button></a>
+{% endblock %}

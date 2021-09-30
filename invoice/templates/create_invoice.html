@@ -1,4 +1,4 @@
-
+{% extends 'partials/base_invoice.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
@@ -26,10 +26,10 @@
 
 
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Create an Invoice now</h1>
+    <h1 class="h2" style="margin-left: 20px;";>Allifmaal Invoice Sytem</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
       <div class="btn-group me-2">
-        <a href="{% url 'invoices' %}"><button type="button" class="btn btn-primary">Go Back</button></a>
+        <a href="{% url 'invoices' %}"><button type="button" class="btn btn-primary">Invoices</button></a>
       </div>
     </div>
   </div>
@@ -56,11 +56,11 @@
                 <thead>
                   <tr>
 
-                    <th>Title</th>
+                    <th>ID</th>
                     <th>Description</th>
                     <th>Quantity</th>
                     <th>Price</th>
-                    <th>Related Invoice</th>
+                    <th>Invoice No.</th>
 
                   </tr>
                 </thead>
@@ -68,11 +68,11 @@
 
                   {% for product in products %}
                 <tr>
-                  <td>{{product.title}}</td>
+                  <td>{{forloop.counter}}</td>
                   <td>{{product.description}}</td>
                   <td>{{product.quantity}}</td>
                   <td>{{product.currency}} {{product.unitPrice}}</td>
-                  <td>{{product.invoice.number}}</td>
+                  <td>{{product.invoice.invoiceNumber}}</td>
                 </tr>
                   {% endfor %}
 
@@ -154,7 +154,7 @@
 
         </div>
         <div class="modal-footer flex-column border-top-0">
-          <button type="submit" class="btn btn-lg btn-primary w-100 mx-0 mb-2">Save changes</button>
+          <button type="submit" class="btn btn-lg btn-primary w-100 mx-0 mb-2">Save</button>
         </div>
 
         </form>

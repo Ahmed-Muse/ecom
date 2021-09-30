@@ -34,6 +34,11 @@ urlpatterns = [
     path('invoicesys/', include('invoicesys.urls')),#point to systemadmins
     path('invoice/', include('django.contrib.auth.urls')),#this ensures and allows that we use the already built in authentication system
     path('invoice/', include('invoice.urls')),#point to systemadmins
+
+    path('htmlpagetopdfbydjango/', include('django.contrib.auth.urls')),#this ensures and allows that we use the already built in authentication system
+    path('htmlpagetopdfbydjango/', include('htmlpagetopdfbydjango.urls')),#point to systemadmins
+
+
 ]
 
 

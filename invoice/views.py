@@ -132,28 +132,28 @@ def clients(request):
 
 
 ####################################3 main invoices ################################
-def createInvoice(request):
+def createInvoice(request):#this function just creates a blank invoice that has a ref no.
     #create a blank invoice ....
-    invoiceNumber = 'INV/AMD-'+str(uuid4()).split('-')[1]
-    newInvoice = InvoicesModel.objects.create(invoiceNumber=invoiceNumber)
+    invoiceNumber = 'INV/AMD-'+str(uuid4()).split('-')[1]#this creates the invoice ref no.
+    newInvoice = InvoicesModel.objects.create(invoiceNumber=invoiceNumber)#create new invoice whose ref number is invoiceNumber
     newInvoice.save()
 
-    inv = InvoicesModel.objects.get(invoiceNumber=invoiceNumber)
+    inv = InvoicesModel.objects.get(invoiceNumber=invoiceNumber)#go to the model and get the invoice whose number is invoiceNumber, then send it to create-build-invoice
     return redirect('create-build-invoice', slug=inv.slug)
-   
+    
 
 def createBuildInvoice(request, slug):
     
-    #fetch that invoice
+    #fetch that invoice that has been created in the view above using the slug/id
     try:
         invoice = InvoicesModel.objects.get(slug=slug)
-        pass
+        
     except:
-        messages.error(request, 'Something went wrong')
+        messages.error(request, 'Something went wrong and could not get the invoice')
         return redirect('invoices')
 
     #fetch all the products - related to this invoice
-    products = ProductsModel.objects.filter(invoice=invoice)#the products will be added to invoice
+    products = ProductsModel.objects.filter(invoice=invoice)#filter the products in the db and get those related to the invoice
 
 
     context = {}
