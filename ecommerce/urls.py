@@ -38,6 +38,9 @@ urlpatterns = [
     path('htmlpagetopdfbydjango/', include('django.contrib.auth.urls')),#this ensures and allows that we use the already built in authentication system
     path('htmlpagetopdfbydjango/', include('htmlpagetopdfbydjango.urls')),#point to systemadmins
 
+    path('flights/', include('django.contrib.auth.urls')),#this ensures and allows that we use the already built in authentication system
+    path('flights/', include('flights.urls')),#point to systemadmins
+
 
 ]
 
