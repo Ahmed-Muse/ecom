@@ -6,7 +6,8 @@ def index(request):
    
     form =AddTasksForm(request.POST or None)
    
-    tasks=TasksModel.objects.all()
+    #tasks=TasksModel.objects.order_by('complete','dueDate')
+    tasks=TasksModel.objects.order_by('dueDate')
     
     if form.is_valid():
         form.save()

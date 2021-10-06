@@ -3,6 +3,14 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
+<style>
+    .timer{
+	background-color: #dc3545;
+	border-radius: 5px;
+	padding: 5px;
+
+}
+</style>
    <!-- start of important for this tabs popup-->
     <!-- Google fonts - Poppins -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -44,6 +52,12 @@
                               <div class="form-field">
                                {{form.status}}
                               </div>
+                              <div class="form-field">
+                                {{form.dueDate}}
+                               </div>
+                               <div class="form-field">
+                                {{form.complete}}
+                               </div>
                               
                       </div>
                       
@@ -70,8 +84,11 @@
                                     <th scope="col">Title</th>
                                     <th scope="col">Description</th>
                                     <th scope="col">Status</th>
+                                    <th scope="col">Due</th>
+                                    <th scope="col">Complete</th>
                                     <th scope="col">Update</th>
                                     <th scope="col">Delete</th>
+                                    <th scope="col">Remaining Time</th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -82,6 +99,9 @@
                                     <td>{{task.title}}</td>
                                     <td>{{task.task}}</td>
                                     <td>{{task.status}}</td>
+                                    <td>{{task.dueDate}}</td>
+                                    <td>{{task.complete}}</td>
+
                                      
         <td> <a href="{% url 'todoapp:update_tasks' task.id %}" data-toggle="tooltip" title="Delete this record">
              <button class="btn btn-success">Update</button></a></td>
@@ -89,7 +109,12 @@
                                   
             <td> <a href="{% url 'todoapp:delete_task' task.id %}" data-toggle="tooltip" title="Delete this record">
                 <button class="btn btn-danger">Delete</button></a></td>
-        
+
+                <td>  <button class="btn btn-success"> {{ task.dueDate|timeuntil }}</button></td>
+
+                
+
+              
        
     
     </tr>
