@@ -1,12 +1,113 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>
-flights
-    </title>
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes,maximum-scale=1, minimum-scale=1">
+    
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <!--FontAwesome CDN-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+        integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+
+    <title>{{title}}</title>
+
+
+    
+ 
 </head>
+<link rel="stylesheet" type="text/css" href="{% static 'css/eshop_mainstyle.css' %}">
 <body>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/eshop_mainstyle.css' %}">
+
+    <!--this css file is for the calculator-->
+    <link href="{% static 'css/stylescalc2.css' %}" rel="stylesheet">
+
+
+
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-info bg-info">
+        <div class="container">
+            <a class="navbar-brand text-white" href="/">Website</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="{% url 'dashboard' %}">Dashboard<span
+                                class="sr-only">(current)</span></a></li>
+                
+                <li class="nav-item active">
+                <a class="nav-link text-white" href="{% url 'stock' %}">Stock<span
+                class="sr-only">(current)</span></a></li>
+                <li class="nav-item active">
+                <a class="nav-link text-white" href="{% url 'hrm' %}">HR<span
+                class="sr-only">(current)</span></a></li>
+
+                <li class="nav-item active">
+                    <a class="nav-link text-white" href="{% url 'customers' %}">Customers<span
+                            class="sr-only">(current)</span></a></li>
+                                
+                        
+                     
+                </ul>
+
+               
+               <style>
+                   #msg{
+                       font-size: 18px;
+                       color: white;
+                       margin-left: 500px;
+                   }
+               </style>
+                
+                {% if user.is_authenticated %}
+
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <span id="msg">Hi {{request.user}} </span>
+                       <span class="sr-only">(current)</span></a>
+                        
+                    </li> 
+                </ul>
+
+
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="{% url 'logoutpage' %}"> Logout <span
+                                class="sr-only">(current)</span></a>
+                    </li> 
+                </ul>
+                {% else %}
+                <ul class="navbar-nav ml-auto">
+                
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="{% url 'loginpage' %}">Login <span
+                                class="sr-only">(current)</span></a>
+                    </li> 
+                </ul>
+                {% endif %}
+
+
+
+            </div>
+        </div>
+    </nav>
+    <!--End Navbar-->
+    
     {% block body %}
     {% endblock %}
-</body>
+
+
 </html>

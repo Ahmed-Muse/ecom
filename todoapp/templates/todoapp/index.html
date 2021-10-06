@@ -1,0 +1,116 @@
+
+{% extends "ems/base_dashboard.html"%}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+   <!-- start of important for this tabs popup-->
+    <!-- Google fonts - Poppins -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+ 
+
+	<div id="user_details" class="tabcontent" >
+								
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header bg-info text-white">
+                            Tasks page
+                        </div>
+                        <div class="card-body">
+                            <marquee behavior="" direction="left">
+                                <h3 class="my-4"> {{title}}</h3> </h3>
+                            </marquee>
+                        </div>
+                    </div>
+                   
+
+                   
+              <!--start of the form section-->     
+            <form class="form-horizontal" method="POST" action="">
+            {% csrf_token %}
+         
+          
+         
+                      <div id="shipping-info">
+                          <hr>
+                              <div class="form-field">
+                               {{form.title}}
+                              </div>
+                              <div class="form-field">
+                               {{form.task}}
+                              </div>
+                              <div class="form-field">
+                               {{form.status}}
+                              </div>
+                              
+                      </div>
+                      
+                      <button id="form-button" class="btn btn-success btn-block" type="submit">Save</button>
+                  </form>
+                  
+                    <!--end of content of left column-->
+      
+      
+                </div>
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header bg-info text-white">
+                            <h5 style="color: white; text-align: center;">Tasks page </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                               <!--main content-->
+                               <table class="table table-hover">
+                                <thead>
+                                  <tr>
+                                   
+                                    <th scope="col">Task No.</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Update</th>
+                                    <th scope="col">Delete</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    {% for task in tasks %}
+                                  <tr>
+                                    
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{task.title}}</td>
+                                    <td>{{task.task}}</td>
+                                    <td>{{task.status}}</td>
+                                     
+        <td> <a href="{% url 'todoapp:update_tasks' task.id %}" data-toggle="tooltip" title="Delete this record">
+             <button class="btn btn-success">Update</button></a></td>
+                                    
+                                  
+            <td> <a href="{% url 'todoapp:delete_task' task.id %}" data-toggle="tooltip" title="Delete this record">
+                <button class="btn btn-danger">Delete</button></a></td>
+        
+       
+    
+    </tr>
+                                  
+                                {% endfor %}
+                                </tbody>
+                              </table>
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                                
+	</div>
+						
+	
+
+     
+            
+            
+            {% endblock %}
+   

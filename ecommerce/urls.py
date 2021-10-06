@@ -40,6 +40,11 @@ urlpatterns = [
 
     path('flights/', include('django.contrib.auth.urls')),#this ensures and allows that we use the already built in authentication system
     path('flights/', include('flights.urls')),#point to systemadmins
+    path('singlepageapp/', include('django.contrib.auth.urls')),#this ensures and allows that we use the already built in authentication system
+    path('singlepageapp/', include('singlepageapp.urls')),#point to systemadmins
+
+    path('todoapp/', include('django.contrib.auth.urls')),#this ensures and allows that we use the already built in authentication system
+    path('todoapp/', include('todoapp.urls')),#point to systemadmins
 
 
 ]

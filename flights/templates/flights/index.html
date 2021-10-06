@@ -1,9 +1,18 @@
 {% extends "flights/layout.html"%}
 {% block body %}
-<h1>testing</h1>
+<style>
+    .flight{
+        color: red;
+        font-size: 50px;
+        text-align: center;
+    }
+</style>
+<div id="flight">
+<h1 style="text-align: center;">International flights</h1>
+
 {% for flight in flights %}
-<ul><h3>
-    <li>
+<h3>
+    <li style="text-align: center;">
 
         {{flight.id}}
        from  {{flight.origin}} to
@@ -12,8 +21,8 @@
         </a>
     </li>
     </h3>
-</ul>
 
 
 {% endfor %}
+</div>
 {% endblock%}

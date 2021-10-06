@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'invoice',
     'htmlpagetopdfbydjango',
     'flights',
+    'singlepageapp',
+    'todoapp',
    
     
 ]
