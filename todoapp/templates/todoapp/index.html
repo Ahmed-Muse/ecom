@@ -10,6 +10,32 @@
 	padding: 5px;
 
 }
+.form{
+    background-color: #17a2b8;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5),
+            0 6px 20px 0 rgba(0,0,0,0.39);
+
+    margin-bottom : 5%;
+    border-radius: 25px;
+    padding : 2%;
+    overflow: auto;
+    resize: both;
+    text-overflow: ellipsis;
+}
+.form:hover{
+    background-color: #61a2b8;
+    
+}
+.card{
+    margin-bottom : 5%;
+    border-radius: 10px;
+    padding : 2%;
+   
+   
+    text-overflow: ellipsis;
+}
+
+
 </style>
    <!-- start of important for this tabs popup-->
     <!-- Google fonts - Poppins -->
@@ -21,20 +47,12 @@
 								
         <div class="container">
             <div class="row mt-4">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header bg-info text-white">
-                            Tasks page
-                        </div>
-                        <div class="card-body">
-                            <marquee behavior="" direction="left">
-                                <h3 class="my-4"> {{title}}</h3> </h3>
-                            </marquee>
-                        </div>
-                    </div>
+                <div class="col-md-3">
                    
 
-                   
+                 <div class="form">
+                     <h4 style="color: white; text-align: center;">Add task</h4>
+
               <!--start of the form section-->     
             <form class="form-horizontal" method="POST" action="">
             {% csrf_token %}
@@ -58,6 +76,9 @@
                                <div class="form-field">
                                 {{form.complete}}
                                </div>
+                               <div class="form-field">
+                                {{form.taskDay}}
+                               </div>
                               
                       </div>
                       
@@ -65,10 +86,11 @@
                   </form>
                   
                     <!--end of content of left column-->
+                    </div>
       
       
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-9" style="padding-left: 1px;">
                     <div class="card">
                         <div class="card-header bg-info text-white">
                             <h5 style="color: white; text-align: center;">Tasks page </h5>
@@ -93,6 +115,7 @@
                                 </thead>
                                 <tbody>
                                     {% for task in tasks %}
+                                    {% if task.taskDay == 'Monday' %}
                                   <tr>
                                     
                                     <td>{{forloop.counter}}</td>
@@ -101,6 +124,7 @@
                                     <td>{{task.status}}</td>
                                     <td>{{task.dueDate}}</td>
                                     <td>{{task.complete}}</td>
+                                    <td>{{task.taskDay}}</td>
 
                                      
         <td> <a href="{% url 'todoapp:update_tasks' task.id %}" data-toggle="tooltip" title="Delete this record">
@@ -112,12 +136,15 @@
 
                 <td>  <button class="btn btn-success"> {{ task.dueDate|timeuntil }}</button></td>
 
-                
-
-              
-       
     
     </tr>
+    {% elif task.taskDay == 'Wednesday' %}
+    {{task.task}}  <a href="{% url 'todoapp:delete_task' task.id %}" data-toggle="tooltip" title="Delete this record">
+        <button class="btn btn-danger">Delete</button></a>
+    {% else%}
+    {{task.taskDay}}  <a href="{% url 'todoapp:delete_task' task.id %}" data-toggle="tooltip" title="Delete this record">
+        <button class="btn btn-danger">Delete</button></a>
+    {% endif %}
                                   
                                 {% endfor %}
                                 </tbody>

@@ -50,7 +50,7 @@ def customer_render_pdf_view(request,*args,**kwargs):
     return response
 
 def render_pdf_view(request):
-    template_path = 'example.html'
+    template_path = 'example.html'#this is the template to be converted to pdf
     customers=Customerpdf.objects.all()
     posts=Postpdf.objects.all()
     logos=Logopdf.objects.all()
@@ -61,7 +61,9 @@ def render_pdf_view(request):
     
     }
     # Create a Django response object, and specify content_type as pdf
+    
     response = HttpResponse(content_type='application/pdf')
+    #response = HttpResponse(content_type='application/doc')#this will download pdf automatically once clicked
 
     #if you want to auto download run the code below
     #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
